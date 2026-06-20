@@ -65,7 +65,7 @@ graph TD
         P1["Procesor 1"] & P2["Procesor 2"] & P3["Procesor 3"] --> SharedMem[("Wspólna Pamięć RAM")]
     end
     subgraph "Przesyłanie Wiadomości (np. MPI)"
-        NodeA["Węzeł A: Procesor 1 + RAM A"] <-->|Komunikacja sieciowa (MPI Send/Recv)| NodeB["Węzeł B: Procesor 2 + RAM B"]
+        NodeA["Węzeł A: Procesor 1 + RAM A"] <-->|"Komunikacja sieciowa (MPI Send/Recv)"| NodeB["Węzeł B: Procesor 2 + RAM B"]
     end
 ```
 

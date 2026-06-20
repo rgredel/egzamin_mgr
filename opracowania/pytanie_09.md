@@ -39,7 +39,7 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 ```mermaid
 graph TD
     Attacker["Atakujący"] -->|1. Manipulacja żądaniami HTTP| Client["Klient / Przeglądarka <br/> (brak kontroli wejścia)"]
-    Client -->|2. Wstrzykiwanie kodu / złośliwe wejście| Server["Serwer Aplikacji Webowej"]
+    Client -->|"2. Wstrzykiwanie kodu / złośliwe wejście"| Server["Serwer Aplikacji Webowej"]
     Server -->|SQL Injection| DB[("Baza Danych")]
     Server -->|Command Injection| OS["System Operacyjny Serwera"]
     Server -->|Błędy bibliotek| Deps["Zależności firm trzecich (npm, Maven itp.)"]

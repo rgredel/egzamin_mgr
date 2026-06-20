@@ -54,7 +54,7 @@ graph TD
         Pub -->|Suma wybranych elementów| Cipher["Szyfrogram S"]
     end
     subgraph "Odbiorca (Deszyfrowanie)"
-        Cipher -->|Transformacja modularna (mod n, w^-1)| Easy["Prostszy plecak"]
+        Cipher -->|"Transformacja modularna (mod n, w^-1)"| Easy["Prostszy plecak"]
         Easy -->|Rozwiązanie algorytmem zachłannym| Priv["Klucz prywatny: plecak superrosnący"]
         Priv --> Decrypt["Wiadomość zdeszyfrowana: 1101"]
     end

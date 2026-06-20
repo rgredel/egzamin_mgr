@@ -46,9 +46,9 @@ graph TD
         MON["CSIRT MON <br/> (Wojska Obrony Cyberprzestrzeni)"]
     end
     subgraph "Sektory i Odbiorcy"
-        ABW -->|Administracja rządowa & Infrastruktura krytyczna| IK["Operatorzy Usług Kluczowych (OUK)"]
+        ABW -->|"Administracja rządowa & Infrastruktura krytyczna"| IK["Operatorzy Usług Kluczowych (OUK)"]
         NASK -->|Sektor cywilny, samorządy, obywatele| PC["Podmioty publiczne, DUC, Obywatele"]
-        MON -->|Resort obrony narodowej & Siły Zbrojne| SZ["Wojsko i Jednostki Wojskowe"]
+        MON -->|"Resort obrony narodowej & Siły Zbrojne"| SZ["Wojsko i Jednostki Wojskowe"]
     end
     style ABW fill:#ffecb3,stroke:#ffa000,stroke-width:2px
     style NASK fill:#e8f5e9,stroke:#388e3c,stroke-width:2px

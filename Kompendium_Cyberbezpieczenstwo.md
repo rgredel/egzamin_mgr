@@ -312,9 +312,9 @@ graph TD
         MON["CSIRT MON <br/> (Wojska Obrony Cyberprzestrzeni)"]
     end
     subgraph "Sektory i Odbiorcy"
-        ABW -->|Administracja rządowa & Infrastruktura krytyczna| IK["Operatorzy Usług Kluczowych (OUK)"]
+        ABW -->|"Administracja rządowa & Infrastruktura krytyczna"| IK["Operatorzy Usług Kluczowych (OUK)"]
         NASK -->|Sektor cywilny, samorządy, obywatele| PC["Podmioty publiczne, DUC, Obywatele"]
-        MON -->|Resort obrony narodowej & Siły Zbrojne| SZ["Wojsko i Jednostki Wojskowe"]
+        MON -->|"Resort obrony narodowej & Siły Zbrojne"| SZ["Wojsko i Jednostki Wojskowe"]
     end
     style ABW fill:#ffecb3,stroke:#ffa000,stroke-width:2px
     style NASK fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
@@ -576,7 +576,7 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 ```mermaid
 graph TD
     Attacker["Atakujący"] -->|1. Manipulacja żądaniami HTTP| Client["Klient / Przeglądarka <br/> (brak kontroli wejścia)"]
-    Client -->|2. Wstrzykiwanie kodu / złośliwe wejście| Server["Serwer Aplikacji Webowej"]
+    Client -->|"2. Wstrzykiwanie kodu / złośliwe wejście"| Server["Serwer Aplikacji Webowej"]
     Server -->|SQL Injection| DB[("Baza Danych")]
     Server -->|Command Injection| OS["System Operacyjny Serwera"]
     Server -->|Błędy bibliotek| Deps["Zależności firm trzecich (npm, Maven itp.)"]
@@ -905,8 +905,8 @@ graph LR
     end
     subgraph "Skanowanie portów (SYN Scan)"
         Scanner["Atakujący"] -->|Pakiety SYN| Target["Cel"]
-        Target -->|SYN-ACK / Port otwarty| Scanner
-        Target -->|RST / Port zamknięty| Scanner
+        Target -->|"SYN-ACK / Port otwarty"| Scanner
+        Target -->|"RST / Port zamknięty"| Scanner
     end
 ```
 
@@ -1859,7 +1859,7 @@ graph TD
         P1["Procesor 1"] & P2["Procesor 2"] & P3["Procesor 3"] --> SharedMem[("Wspólna Pamięć RAM")]
     end
     subgraph "Przesyłanie Wiadomości (np. MPI)"
-        NodeA["Węzeł A: Procesor 1 + RAM A"] <-->|Komunikacja sieciowa (MPI Send/Recv)| NodeB["Węzeł B: Procesor 2 + RAM B"]
+        NodeA["Węzeł A: Procesor 1 + RAM A"] <-->|"Komunikacja sieciowa (MPI Send/Recv)"| NodeB["Węzeł B: Procesor 2 + RAM B"]
     end
 ```
 
@@ -2246,7 +2246,7 @@ graph TD
         Pub -->|Suma wybranych elementów| Cipher["Szyfrogram S"]
     end
     subgraph "Odbiorca (Deszyfrowanie)"
-        Cipher -->|Transformacja modularna (mod n, w^-1)| Easy["Prostszy plecak"]
+        Cipher -->|"Transformacja modularna (mod n, w^-1)"| Easy["Prostszy plecak"]
         Easy -->|Rozwiązanie algorytmem zachłannym| Priv["Klucz prywatny: plecak superrosnący"]
         Priv --> Decrypt["Wiadomość zdeszyfrowana: 1101"]
     end

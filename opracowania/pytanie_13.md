@@ -57,7 +57,7 @@ graph LR
     end
     subgraph "Skanowanie portów (SYN Scan)"
         Scanner["Atakujący"] -->|Pakiety SYN| Target["Cel"]
-        Target -->|SYN-ACK / Port otwarty| Scanner
-        Target -->|RST / Port zamknięty| Scanner
+        Target -->|"SYN-ACK / Port otwarty"| Scanner
+        Target -->|"RST / Port zamknięty"| Scanner
     end
 ```
