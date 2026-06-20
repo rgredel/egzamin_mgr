@@ -64,10 +64,10 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Prawo Amdahla (Stały rozmiar zadania)
+    subgraph "Prawo Amdahla (Stały rozmiar zadania)"
         Amdahl["Maksymalne przyspieszenie jest ograniczone <br/> przez część programu, która musi być wykonana szeregowo"]
     end
-    subgraph Prawo Gustafsona (Zmieniający się rozmiar zadania)
+    subgraph "Prawo Gustafsona (Zmieniający się rozmiar zadania)"
         Gustafson["Rozmiar problemu rośnie wraz z liczbą rdzeni; <br/> pozwala na uzyskanie lepszej dokładności w stałym czasie"]
     end
 ```

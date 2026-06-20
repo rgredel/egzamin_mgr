@@ -50,12 +50,12 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph LR
-    subgraph Man-in-the-Middle (ARP Spoofing)
+    subgraph "Man-in-the-Middle (ARP Spoofing)"
         Victim["Ofiara"] -.->|Błędny wpis ARP| Attacker["Atakujący (MitM)"]
         Attacker -.-> Router["Brama domyślna"]
         Victim -.-x|Przejęty i zmodyfikowany ruch| Router
     end
-    subgraph Skanowanie portów (SYN Scan)
+    subgraph "Skanowanie portów (SYN Scan)"
         Scanner["Atakujący"] -->|Pakiety SYN| Target["Cel"]
         Target -->|SYN-ACK / Port otwarty| Scanner
         Target -->|RST / Port zamknięty| Scanner

@@ -50,10 +50,10 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph LR
-    subgraph Szyfr Cezara (Proste podstawienie - przesunięcie o 3)
+    subgraph "Szyfr Cezara (Proste podstawienie - przesunięcie o 3)"
         TextIn["A"] -->|Przesunięcie| TextOut["D"]
     end
-    subgraph Szyfr Vigenere'a (Wieloalfabetowy)
+    subgraph "Szyfr Vigenere'a (Wieloalfabetowy)"
         Key["Klucz powtarzany: K L U C Z K L U"]
         Plain["Tekst jawny:      T E K S T J A W"]
         Key & Plain --> Table["Kwadrat Vigenere'a (Lookup)"]

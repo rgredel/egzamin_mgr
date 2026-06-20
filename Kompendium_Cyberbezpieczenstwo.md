@@ -41,11 +41,11 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Tradycyjne podejście (Silne sprzężenie)
+    subgraph "Tradycyjne podejście (Silne sprzężenie)"
         A[Klient] -->|tworzy przez new| B[Serwis]
         B -->|tworzy przez new| C[Repozytorium]
     end
-    subgraph Odwrócenie Sterowania / Wstrzykiwanie Zależności (IoC/DI)
+    subgraph "Odwrócenie Sterowania / Wstrzykiwanie Zależności (IoC/DI)"
         Container[Kontener IoC] -.->|1. Tworzy instancję| C2[Repozytorium]
         Container -.->|2. Tworzy i wstrzykuje Repozytorium do| B2[Serwis]
         A2[Klient] -->|3. Pobiera gotowy| B2
@@ -306,12 +306,12 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph CSIRT Poziomu Krajowego
+    subgraph "CSIRT Poziomu Krajowego"
         ABW["CSIRT GOV <br/> (Agencja Bezpieczeństwa Wewnętrznego)"]
         NASK["CSIRT NASK <br/> (Naukowa i Akademicka Sieć Komputerowa)"]
         MON["CSIRT MON <br/> (Wojska Obrony Cyberprzestrzeni)"]
     end
-    subgraph Sektory i Odbiorcy
+    subgraph "Sektory i Odbiorcy"
         ABW -->|Administracja rządowa & Infrastruktura krytyczna| IK["Operatorzy Usług Kluczowych (OUK)"]
         NASK -->|Sektor cywilny, samorządy, obywatele| PC["Podmioty publiczne, DUC, Obywatele"]
         MON -->|Resort obrony narodowej & Siły Zbrojne| SZ["Wojsko i Jednostki Wojskowe"]
@@ -452,12 +452,12 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Kategoria ataku
+    subgraph "Kategoria ataku"
         V["1. Wolumetryczne <br/> (np. UDP Flood, DNS/NTP Amplification)"]
         P["2. Na protokoły <br/> (np. SYN Flood, Ping of Death)"]
         A["3. Na warstwę aplikacji <br/> (np. Slowloris, HTTP Flood)"]
     end
-    subgraph Struktura ataku DDoS
+    subgraph "Struktura ataku DDoS"
         Attacker["Atakujący"] -->|Sterowanie| C2["Serwer C2 (Command & Control)"]
         C2 -->|Instrukcje| B1["Zombie Bot 1"]
         C2 -->|Instrukcje| B2["Zombie Bot 2"]
@@ -898,12 +898,12 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph LR
-    subgraph Man-in-the-Middle (ARP Spoofing)
+    subgraph "Man-in-the-Middle (ARP Spoofing)"
         Victim["Ofiara"] -.->|Błędny wpis ARP| Attacker["Atakujący (MitM)"]
         Attacker -.-> Router["Brama domyślna"]
         Victim -.-x|Przejęty i zmodyfikowany ruch| Router
     end
-    subgraph Skanowanie portów (SYN Scan)
+    subgraph "Skanowanie portów (SYN Scan)"
         Scanner["Atakujący"] -->|Pakiety SYN| Target["Cel"]
         Target -->|SYN-ACK / Port otwarty| Scanner
         Target -->|RST / Port zamknięty| Scanner
@@ -1470,10 +1470,10 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Tradycyjna - Waterfall (Liniowa, sztywna)
+    subgraph "Tradycyjna - Waterfall (Liniowa, sztywna)"
         Plan["Planowanie"] --> Design["Projektowanie"] --> Dev["Kodowanie"] --> Test["Testy"] --> Deploy["Wdrożenie"]
     end
-    subgraph Zwinna - Agile/Scrum (Iteracyjna, elastyczna)
+    subgraph "Zwinna - Agile/Scrum (Iteracyjna, elastyczna)"
         Backlog["Product Backlog"] --> Sprint["Sprint: 1-4 tygodnie <br/> (Plan -> Kod -> Test -> Review)"]
         Sprint --> Increment["Działający Przyrost Oprogramowania"]
         Increment --> Backlog
@@ -1711,8 +1711,9 @@ graph LR
     style B fill:#ffebee,stroke:#d32f2f
     style D fill:#ffebee,stroke:#d32f2f
     style E fill:#ffebee,stroke:#d32f2f
-    Note over A,E: Ścieżka Krytyczna (12 dni): A -> B -> D -> E
 ```
+
+*Legenda: Czerwone krawędzie i wierzchołki oznaczają Ścieżkę Krytyczną (łączny czas: 12 dni): **A ➔ B ➔ D ➔ E**.*
 
 ## Podsumowanie
 Struktura podziału pracy (WBS) pozwala na zdekomponowanie skomplikowanego projektu na małe zadania. Następnie, poprzez połączenie ich zależnościami logicznymi, tworzy się sieć powiązań. Wyznaczenie ścieżki krytycznej przy użyciu algorytmów CPM (dla stałych czasów) lub PERT (dla zakresów czasów) pozwala zidentyfikować kluczowe zadania decydujące o terminie końcowym projektu i zminimalizować ryzyko opóźnień.
@@ -1775,10 +1776,10 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Monolit / System Centralny
+    subgraph "Monolit / System Centralny"
         Client1["Klient 1"] & Client2["Klient 2"] --> Server["Pojedynczy Serwer Bazy <br/> (SPOF - Single Point of Failure)"]
     end
-    subgraph System Rozproszony
+    subgraph "System Rozproszony"
         C1["Klient 1"] & C2["Klient 2"] --> LoadBalancer["Load Balancer"]
         LoadBalancer --> Node1["Węzeł 1"] & Node2["Węzeł 2"] & Node3["Węzeł 3"]
         Node1 <--> Node2 <--> Node3
@@ -1854,10 +1855,10 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Pamięć Współdzielona (np. OpenMP)
+    subgraph "Pamięć Współdzielona (np. OpenMP)"
         P1["Procesor 1"] & P2["Procesor 2"] & P3["Procesor 3"] --> SharedMem[("Wspólna Pamięć RAM")]
     end
-    subgraph Przesyłanie Wiadomości (np. MPI)
+    subgraph "Przesyłanie Wiadomości (np. MPI)"
         NodeA["Węzeł A: Procesor 1 + RAM A"] <-->|Komunikacja sieciowa (MPI Send/Recv)| NodeB["Węzeł B: Procesor 2 + RAM B"]
     end
 ```
@@ -1934,10 +1935,10 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Prawo Amdahla (Stały rozmiar zadania)
+    subgraph "Prawo Amdahla (Stały rozmiar zadania)"
         Amdahl["Maksymalne przyspieszenie jest ograniczone <br/> przez część programu, która musi być wykonana szeregowo"]
     end
-    subgraph Prawo Gustafsona (Zmieniający się rozmiar zadania)
+    subgraph "Prawo Gustafsona (Zmieniający się rozmiar zadania)"
         Gustafson["Rozmiar problemu rośnie wraz z liczbą rdzeni; <br/> pozwala na uzyskanie lepszej dokładności w stałym czasie"]
     end
 ```
@@ -2097,10 +2098,10 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph LR
-    subgraph Szyfr Cezara (Proste podstawienie - przesunięcie o 3)
+    subgraph "Szyfr Cezara (Proste podstawienie - przesunięcie o 3)"
         TextIn["A"] -->|Przesunięcie| TextOut["D"]
     end
-    subgraph Szyfr Vigenere'a (Wieloalfabetowy)
+    subgraph "Szyfr Vigenere'a (Wieloalfabetowy)"
         Key["Klucz powtarzany: K L U C Z K L U"]
         Plain["Tekst jawny:      T E K S T J A W"]
         Key & Plain --> Table["Kwadrat Vigenere'a (Lookup)"]
@@ -2240,11 +2241,11 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Nadawca (Szyfrowanie)
+    subgraph "Nadawca (Szyfrowanie)"
         Plain["Wiadomość binarna (np. 1101)"] -->|Szyfrowanie| Pub["Klucz publiczny: trudny plecak"]
         Pub -->|Suma wybranych elementów| Cipher["Szyfrogram S"]
     end
-    subgraph Odbiorca (Deszyfrowanie)
+    subgraph "Odbiorca (Deszyfrowanie)"
         Cipher -->|Transformacja modularna (mod n, w^-1)| Easy["Prostszy plecak"]
         Easy -->|Rozwiązanie algorytmem zachłannym| Priv["Klucz prywatny: plecak superrosnący"]
         Priv --> Decrypt["Wiadomość zdeszyfrowana: 1101"]
@@ -2468,11 +2469,11 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Android Sandbox (Oparty na UID Linuxa)
+    subgraph "Android Sandbox (Oparty na UID Linuxa)"
         AppA["Aplikacja A <br/> (UID: 10001)"] -.->|Brak dostępu do plików B| DirectoryB[("Katalog Aplikacji B")]
         AppB["Aplikacja B <br/> (UID: 10002)"] -.->|Brak dostępu do plików A| DirectoryA[("Katalog Aplikacji A")]
     end
-    subgraph iOS Sandbox (Oparty na kontenerach i piaskownicy Seatbelt)
+    subgraph "iOS Sandbox (Oparty na kontenerach i piaskownicy Seatbelt)"
         AppC["Aplikacja C"] -->|Wydzielony kontener| ContainerC["Bundle Container / Data Container"]
         AppD["Aplikacja D"] -->|Wydzielony kontener| ContainerD["Bundle Container / Data Container"]
     end
@@ -2902,20 +2903,20 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Jak? (Infrastruktura)
+    subgraph "Jak? (Infrastruktura)"
         KP["Kluczowi Partnerzy"]
         KD["Kluczowe Działania"]
         KZ["Kluczowe Zasoby"]
     end
-    subgraph Co? (Oferta)
+    subgraph "Co? (Oferta)"
         PW["Propozycja Wartości"]
     end
-    subgraph Kto? (Klient)
+    subgraph "Kto? (Klient)"
         RK["Relacje z Klientami"]
         K["Kanały Dotarcia"]
         SK["Segmenty Klientów"]
     end
-    subgraph Za ile? (Finanse)
+    subgraph "Za ile? (Finanse)"
         SKo["Struktura Kosztów"]
         SP["Strumienie Przychodów"]
     end

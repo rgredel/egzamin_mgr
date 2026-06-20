@@ -40,12 +40,12 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph CSIRT Poziomu Krajowego
+    subgraph "CSIRT Poziomu Krajowego"
         ABW["CSIRT GOV <br/> (Agencja Bezpieczeństwa Wewnętrznego)"]
         NASK["CSIRT NASK <br/> (Naukowa i Akademicka Sieć Komputerowa)"]
         MON["CSIRT MON <br/> (Wojska Obrony Cyberprzestrzeni)"]
     end
-    subgraph Sektory i Odbiorcy
+    subgraph "Sektory i Odbiorcy"
         ABW -->|Administracja rządowa & Infrastruktura krytyczna| IK["Operatorzy Usług Kluczowych (OUK)"]
         NASK -->|Sektor cywilny, samorządy, obywatele| PC["Podmioty publiczne, DUC, Obywatele"]
         MON -->|Resort obrony narodowej & Siły Zbrojne| SZ["Wojsko i Jednostki Wojskowe"]

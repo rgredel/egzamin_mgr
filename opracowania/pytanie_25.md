@@ -77,8 +77,9 @@ graph LR
     style B fill:#ffebee,stroke:#d32f2f
     style D fill:#ffebee,stroke:#d32f2f
     style E fill:#ffebee,stroke:#d32f2f
-    Note over A,E: Ścieżka Krytyczna (12 dni): A -> B -> D -> E
 ```
+
+*Legenda: Czerwone krawędzie i wierzchołki oznaczają Ścieżkę Krytyczną (łączny czas: 12 dni): **A ➔ B ➔ D ➔ E**.*
 
 ## Podsumowanie
 Struktura podziału pracy (WBS) pozwala na zdekomponowanie skomplikowanego projektu na małe zadania. Następnie, poprzez połączenie ich zależnościami logicznymi, tworzy się sieć powiązań. Wyznaczenie ścieżki krytycznej przy użyciu algorytmów CPM (dla stałych czasów) lub PERT (dla zakresów czasów) pozwala zidentyfikować kluczowe zadania decydujące o terminie końcowym projektu i zminimalizować ryzyko opóźnień.

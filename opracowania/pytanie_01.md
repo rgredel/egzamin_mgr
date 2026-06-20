@@ -33,11 +33,11 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Tradycyjne podejście (Silne sprzężenie)
+    subgraph "Tradycyjne podejście (Silne sprzężenie)"
         A[Klient] -->|tworzy przez new| B[Serwis]
         B -->|tworzy przez new| C[Repozytorium]
     end
-    subgraph Odwrócenie Sterowania / Wstrzykiwanie Zależności (IoC/DI)
+    subgraph "Odwrócenie Sterowania / Wstrzykiwanie Zależności (IoC/DI)"
         Container[Kontener IoC] -.->|1. Tworzy instancję| C2[Repozytorium]
         Container -.->|2. Tworzy i wstrzykuje Repozytorium do| B2[Serwis]
         A2[Klient] -->|3. Pobiera gotowy| B2

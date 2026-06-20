@@ -53,20 +53,20 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Jak? (Infrastruktura)
+    subgraph "Jak? (Infrastruktura)"
         KP["Kluczowi Partnerzy"]
         KD["Kluczowe Działania"]
         KZ["Kluczowe Zasoby"]
     end
-    subgraph Co? (Oferta)
+    subgraph "Co? (Oferta)"
         PW["Propozycja Wartości"]
     end
-    subgraph Kto? (Klient)
+    subgraph "Kto? (Klient)"
         RK["Relacje z Klientami"]
         K["Kanały Dotarcia"]
         SK["Segmenty Klientów"]
     end
-    subgraph Za ile? (Finanse)
+    subgraph "Za ile? (Finanse)"
         SKo["Struktura Kosztów"]
         SP["Strumienie Przychodów"]
     end

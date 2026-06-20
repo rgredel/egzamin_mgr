@@ -49,11 +49,11 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Nadawca (Szyfrowanie)
+    subgraph "Nadawca (Szyfrowanie)"
         Plain["Wiadomość binarna (np. 1101)"] -->|Szyfrowanie| Pub["Klucz publiczny: trudny plecak"]
         Pub -->|Suma wybranych elementów| Cipher["Szyfrogram S"]
     end
-    subgraph Odbiorca (Deszyfrowanie)
+    subgraph "Odbiorca (Deszyfrowanie)"
         Cipher -->|Transformacja modularna (mod n, w^-1)| Easy["Prostszy plecak"]
         Easy -->|Rozwiązanie algorytmem zachłannym| Priv["Klucz prywatny: plecak superrosnący"]
         Priv --> Decrypt["Wiadomość zdeszyfrowana: 1101"]

@@ -53,10 +53,10 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Monolit / System Centralny
+    subgraph "Monolit / System Centralny"
         Client1["Klient 1"] & Client2["Klient 2"] --> Server["Pojedynczy Serwer Bazy <br/> (SPOF - Single Point of Failure)"]
     end
-    subgraph System Rozproszony
+    subgraph "System Rozproszony"
         C1["Klient 1"] & C2["Klient 2"] --> LoadBalancer["Load Balancer"]
         LoadBalancer --> Node1["Węzeł 1"] & Node2["Węzeł 2"] & Node3["Węzeł 3"]
         Node1 <--> Node2 <--> Node3

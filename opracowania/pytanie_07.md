@@ -50,12 +50,12 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Kategoria ataku
+    subgraph "Kategoria ataku"
         V["1. Wolumetryczne <br/> (np. UDP Flood, DNS/NTP Amplification)"]
         P["2. Na protokoły <br/> (np. SYN Flood, Ping of Death)"]
         A["3. Na warstwę aplikacji <br/> (np. Slowloris, HTTP Flood)"]
     end
-    subgraph Struktura ataku DDoS
+    subgraph "Struktura ataku DDoS"
         Attacker["Atakujący"] -->|Sterowanie| C2["Serwer C2 (Command & Control)"]
         C2 -->|Instrukcje| B1["Zombie Bot 1"]
         C2 -->|Instrukcje| B2["Zombie Bot 2"]

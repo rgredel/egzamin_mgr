@@ -63,10 +63,10 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Tradycyjna - Waterfall (Liniowa, sztywna)
+    subgraph "Tradycyjna - Waterfall (Liniowa, sztywna)"
         Plan["Planowanie"] --> Design["Projektowanie"] --> Dev["Kodowanie"] --> Test["Testy"] --> Deploy["Wdrożenie"]
     end
-    subgraph Zwinna - Agile/Scrum (Iteracyjna, elastyczna)
+    subgraph "Zwinna - Agile/Scrum (Iteracyjna, elastyczna)"
         Backlog["Product Backlog"] --> Sprint["Sprint: 1-4 tygodnie <br/> (Plan -> Kod -> Test -> Review)"]
         Sprint --> Increment["Działający Przyrost Oprogramowania"]
         Increment --> Backlog
