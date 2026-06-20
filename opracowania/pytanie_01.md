@@ -27,5 +27,23 @@ Kontener IoC jest sercem nowoczesnych aplikacji biznesowych. Jego główne zadan
   - **Request**: Jedna instancja na jedno żądanie HTTP (w aplikacjach webowych).
   - **Session**: Jedna instancja na sesję użytkownika HTTP.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Tradycyjne podejście (Silne sprzężenie)
+        A[Klient] -->|tworzy przez new| B[Serwis]
+        B -->|tworzy przez new| C[Repozytorium]
+    end
+    subgraph Odwrócenie Sterowania / Wstrzykiwanie Zależności (IoC/DI)
+        Container[Kontener IoC] -.->|1. Tworzy instancję| C2[Repozytorium]
+        Container -.->|2. Tworzy i wstrzykuje Repozytorium do| B2[Serwis]
+        A2[Klient] -->|3. Pobiera gotowy| B2
+    end
+    style Container fill:#e1f5fe,stroke:#0288d1,stroke-width:2px
+```
+
 ## Podsumowanie
 Stosowanie IoC i DI pozwala na tworzenie kodu o niskim stopniu sprzężenia (loose coupling), co znacząco zwiększa testowalność (łatwość mockowania zależności), modułowość i czytelność aplikacji. Kontener IoC zwalnia programistę z ręcznego tworzenia skomplikowanych drzew obiektów, automatyzując ten proces.

@@ -42,5 +42,20 @@ Zasada ta nakłada na administratora obowiązek zapewnienia odpowiedniego bezpie
 Jest to zasada kluczowa, spajająca pozostałe. Administrator jest nie tylko odpowiedzialny za przestrzeganie wszystkich sześciu zasad opisanych powyżej, ale musi być w stanie **wykazać (udowodnić)** ich przestrzeganie przed organem nadzorczym (w Polsce jest to UODO - Urząd Ochrony Danych Osobowych).
 *Dowody rozliczalności*: Posiadanie Rejestru Czynności Przetwarzania (RCP), procedur zgłaszania wycieków (w ciągu 72 godzin), analiz ryzyka (DPIA) czy powołanie Inspektora Ochrony Danych (IOD).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph LR
+    R["7 Zasad RODO"] --> Z1["1. Zgodność z prawem, rzetelność i przejrzystość"]
+    R --> Z2["2. Ograniczenie celu"]
+    R --> Z3["3. Minimalizacja danych"]
+    R --> Z4["4. Prawidłowość"]
+    R --> Z5["5. Ograniczenie przechowywania"]
+    R --> Z6["6. Integralność i poufność (Bezpieczeństwo)"]
+    R --> Z7["7. Rozliczalność (Obowiązek wykazania zgodności)"]
+```
+
 ## Podsumowanie
 Siedem zasad RODO stanowi ramy projektowe dla współczesnych inżynierów oprogramowania. Zgodnie z nimi, systemy IT powinny domyślnie chronić prywatność (**Privacy by Default** – np. domyślnie niezaznaczone zgody marketingowe) oraz wbudowywać mechanizmy ochrony danych w samą strukturę aplikacji (**Privacy by Design** – np. szyfrowanie haseł w bazie danych przy użyciu algorytmów typu bcrypt).

@@ -42,5 +42,19 @@ W przeszłości aplikacje skanowały otoczenie w poszukiwaniu nadajników Blueto
 - **Ograniczenie uprawnień systemowych**: Uprawnienia do bezpośredniego nawiązywania połączeń (`CALL_PHONE`) i wysyłania SMS (`SEND_SMS`) mogą być nadużywane do generowania kosztów (numery Premium). 
 - **Zabezpieczenie**: Aplikacja może wysłać żądanie nawiązania połączenia lub wysłania SMS, ale system domyślnie przekazuje te dane do **systemowego dialera / aplikacji wiadomości**, gdzie to użytkownik musi ostatecznie fizycznie kliknąć przycisk "Zadzwoń" lub "Wyślij". Bezpośrednie wysłanie bez wiedzy użytkownika jest zablokowane dla zwykłych aplikacji.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+flowchart TD
+    Start["Aplikacja żąda dostępu (np. do kamery)"] --> Check{"Czy uprawnienie jest przyznane w OS?"}
+    Check -->|Tak| Access["Wykonaj operację / Dostęp przyznany"]
+    Check -->|Nie| Show["Pokaż systemowe okno dialogowe zapytania"]
+    Show --> UserDecision{"Decyzja użytkownika"}
+    UserDecision -->|Zezwól| Grant["Zapisz uprawnienie w OS"] --> Access
+    UserDecision -->|Odrzuć| Deny["Zablokuj dostęp i obsłuż brak uprawnienia"]
+```
+
 ## Podsumowanie
 Nowoczesne systemy mobilne zabezpieczają wrażliwe funkcje sprzętowe poprzez ustrukturyzowany model **uprawnień dynamicznych**, rygorystyczne **blokowanie dostępu w tle** oraz systemowe **wskaźniki wizualne** informujące użytkownika o działaniu kamery i mikrofonu. Podejście to oddaje pełną kontrolę nad prywatnością w ręce użytkownika urządzenia.

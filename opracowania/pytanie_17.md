@@ -42,5 +42,18 @@ W przeszłości stosowano metody, które dziś nie są uznawane za rzeczywiste z
 - **Filtrowanie adresów MAC**: Blokowanie urządzeń o nieznanych adresach fizycznych MAC. Adresy te są przesyłane otwartym tekstem w nagłówkach ramek 802.11. Atakujący może łatwo odczytać dozwolony adres MAC i podrobić go na swoim urządzeniu (tzw. *MAC Spoofing*).
 - **WPS (Wi-Fi Protected Setup)**: Standard ułatwiający łączenie urządzeń (np. za pomocą 8-cyfrowego kodu PIN). Posiada krytyczną lukę projektową (podatność na atak brute-force za pomocą narzędzia *Reaver*), umożliwiającą odzyskanie hasła sieci w kilka godzin. **Powinien być bezwzględnie wyłączony**.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph LR
+    WEP["WEP <br/> (Złamany, zakazany)"] --> WPA["WPA <br/> (Tymczasowy, RC4/TKIP)"]
+    WPA --> WPA2["WPA2 <br/> (Standard, AES-CCMP, KRACK)"]
+    WPA2 --> WPA3["WPA3 <br/> (Najnowszy, SAE/Dragonfly, Forward Secrecy)"]
+    style WEP fill:#ffebee,stroke:#c62828,stroke-width:1px
+    style WPA3 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+```
+
 ## Podsumowanie
 W celu zapewnienia bezpieczeństwa sieci Wi-Fi należy bezwzględnie wyłączyć obsługę protokołów WEP, WPA oraz WPS. Rekomendowaną konfiguracją jest stosowanie **WPA3-SAE** dla sieci domowych oraz **WPA3-Enterprise** (z uwierzytelnianiem 802.1X i serwerem RADIUS) w środowiskach biznesowych.

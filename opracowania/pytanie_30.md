@@ -44,5 +44,22 @@ Szyfr Vigenère'a przez stulecia uchodził za nie do złamania. Został złamany
 - **Test Kasiski'ego**: Szukanie powtarzających się sekwencji znaków w szyfrogramie. Odległości między nimi wskazują na potencjalną długość słowa-klucza ($d$). Po ustaleniu $d$, szyfrogram dzieli się na $d$ podtekstów i każdy z nich łamie się osobno klasyczną analizą częstotliwościową.
 - **Wskaźnik koincydencji (metoda Friedmana)**: Statystyczne badanie rozkładu liter pozwalające na matematyczne wyznaczenie długości klucza bez szukania powtórzeń.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph LR
+    subgraph Szyfr Cezara (Proste podstawienie - przesunięcie o 3)
+        TextIn["A"] -->|Przesunięcie| TextOut["D"]
+    end
+    subgraph Szyfr Vigenere'a (Wieloalfabetowy)
+        Key["Klucz powtarzany: K L U C Z K L U"]
+        Plain["Tekst jawny:      T E K S T J A W"]
+        Key & Plain --> Table["Kwadrat Vigenere'a (Lookup)"]
+        Table --> Cipher["Szyfrogram"]
+    end
+```
+
 ## Podsumowanie
 Szyfry podstawieniowe stanowią fundament historii kryptografii. Szyfry jednoalfabetowe oferują zerowe bezpieczeństwo z powodu podatności na analizę częstotliwościową. Szyfry wieloalfabetowe znacząco utrudniły kryptoanalizę poprzez maskowanie statystyk tekstu jawnego. Ich ostatecznym rozwinięciem jest **klucz jednorazowy (One-Time Pad)** – szyfr wieloalfabetowy o długości klucza równej długości wiadomości, który jako jedyny gwarantuje matematycznie udowodnione bezpieczeństwo (tajność doskonałą).

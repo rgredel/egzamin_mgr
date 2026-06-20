@@ -50,5 +50,21 @@ Następnie silnik FAIR wykorzystuje **symulację Monte Carlo**, która wykonuje 
 - Średnią (oczekiwaną) wartość strat rocznych (ALE - Annual Loss Expectancy).
 - Najgorszy możliwy scenariusz (np. z prawdopodobieństwem 5%).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Risk["Ryzyko (RISK)"] --> LEF["Częstotliwość Zdarzeń Straty (Loss Event Frequency)"]
+    Risk --> PLM["Rozmiar Straty (Probable Loss Magnitude)"]
+
+    LEF --> TEF["Częstotliwość kontaktu z zagrożeniem (Threat Event Frequency)"]
+    LEF --> V["Podatność (Vulnerability)"]
+
+    PLM --> Prim["Straty Pierwotne (Primary Loss)"]
+    PLM --> Sec["Straty Wtórne (Secondary Loss)"]
+```
+
 ## Podsumowanie
 Model FAIR to potężne narzędzie łączące techniczną inżynierię bezpieczeństwa z zarządzaniem biznesowym. Pozwala on na precyzyjne uzasadnienie budżetów bezpieczeństwa. Zamiast argumentować: „musimy kupić ten system, bo bez niego ryzyko jest wysokie”, oficer bezpieczeństwa (CISO) korzystający z FAIR może powiedzieć: „wydanie 50 000 PLN na to zabezpieczenie zmniejszy naszą roczną oczekiwaną stratę z tytułu wycieku danych z 400 000 PLN do 120 000 PLN, co daje oszczędność 280 000 PLN rocznie”.

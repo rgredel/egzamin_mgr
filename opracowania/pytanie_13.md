@@ -43,3 +43,21 @@ Wiele protokołów sieciowych (takich jak ARP, DNS czy bazowy protokół IP) zos
 - **Metody obrony**:
   - Konfiguracja reguł **Egress/Ingress Filtering** na routerach brzegowych (blokowanie pakietów wychodzących z sieci lokalnej, które mają adresy źródłowe spoza tej sieci, oraz pakietów wchodzących mających adresy źródłowe z wewnątrz – standard **BCP 38**).
   - Stosowanie mechanizmu **uRPF** (Unicast Reverse Path Forwarding).
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph LR
+    subgraph Man-in-the-Middle (ARP Spoofing)
+        Victim["Ofiara"] -.->|Błędny wpis ARP| Attacker["Atakujący (MitM)"]
+        Attacker -.-> Router["Brama domyślna"]
+        Victim -.-x|Przejęty i zmodyfikowany ruch| Router
+    end
+    subgraph Skanowanie portów (SYN Scan)
+        Scanner["Atakujący"] -->|Pakiety SYN| Target["Cel"]
+        Target -->|SYN-ACK / Port otwarty| Scanner
+        Target -->|RST / Port zamknięty| Scanner
+    end
+```

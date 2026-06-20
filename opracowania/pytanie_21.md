@@ -44,5 +44,16 @@ Wdrożenie bibliotek ataków do procesów bezpieczeństwa organizacji (podejści
 4. **Wymiana wiedzy o zagrożeniach (Cyber Threat Intelligence - CTI)**:
    Biblioteki dają jednolity, znormalizowany słownik pojęć. Dzięki temu raporty o nowych zagrożeniach publikowane na świecie mogą od razu referować do konkretnych numerów technik (np. T1190 – Exploit Public-Facing Application), co ułatwia automatyzację i konfigurację systemów ochronnych.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph LR
+    CAPEC["CAPEC <br/> (Wzorce ataków od strony aplikacji)"] -->|Mapowanie| MITRE["MITRE ATT&CK <br/> (Taktyki i techniki od strony systemu/sieci)"]
+    MITRE -->|Wdrażanie reguł wykrywania| SIEM["Zabezpieczenia / Monitorowanie <br/> (SIEM / EDR / SOC)"]
+    SIEM -->|Identyfikacja luk w obronie| Assessment["Ocena stanu bezpieczeństwa i testy"]
+```
+
 ## Podsumowanie
 Biblioteki ataków (szczególnie MITRE ATT&CK) stanowią fundament nowoczesnego cyberbezpieczeństwa. Pozwalają organizacjom odejść od reaktywnego podejścia sygnaturowego na rzecz proaktywnego monitorowania zachowań i technik stosowanych przez napastników. Integrują one pracę architektów oprogramowania, administratorów sieci, testerów penetracyjnych oraz analityków systemów detekcji, tworząc spójne i mierzalne środowisko obronne.

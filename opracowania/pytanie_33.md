@@ -66,5 +66,21 @@ RSA umożliwia również weryfikację autentyczności wiadomości (podpis cyfrow
 - **Zastosowanie paddingu (OAEP)**: "Surowe" szyfrowanie RSA ($C = M^e \pmod{n}$) jest deterministyczne. Atakujący może zgadnąć treść wiadomości, zaszyfrować ją kluczem publicznym i porównać z przechwyconym szyfrogramem. Aby temu zapobiec, stosuje się schemat **OAEP**, który dodaje losowy szum do wiadomości przed szyfrowaniem, czyniąc proces probabilistycznym.
 - **Podatność na komputery kwantowe**: Algorytm RSA jest podatny na **algorytm Shora** realizowany na komputerach kwantowych. W momencie powstania stabilnego komputera kwantowego o odpowiedniej liczbie kubitów, klucze RSA zostaną natychmiast złamane. Stąd trwają prace nad migracją na algorytmy postkwantowe (PQC).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+sequenceDiagram
+    actor Alice as Nadawca (Alice)
+    actor Bob as Odbiorca (Bob)
+
+    Note over Bob: Generowanie Kluczy RSA:<br/>1. Wybierz p, q (duże pierwsze)<br/>2. n = p*q oraz phi(n) = (p-1)*(q-1)<br/>3. Wybierz e względnie pierwsze z phi(n)<br/>4. Oblicz d (d*e = 1 mod phi(n))
+    Bob->>Alice: Udostępnij klucz publiczny (e, n)
+    Note over Alice: Szyfrowanie:<br/>Wiadomość m <br/> Szyfrogram c = m^e mod n
+    Alice->>Bob: Wyślij szyfrogram c
+    Note over Bob: Deszyfrowanie:<br/>c^d mod n = m (Wiadomość oryginalna)
+```
+
 ## Podsumowanie
 Algorytm RSA to fundamentalny protokół współczesnego bezpieczeństwa sieciowego (stanowiący m.in. podstawę certyfikatów SSL/TLS). Oparty na trudności faktoryzacji dużych liczb złożonych, realizuje zarówno szyfrowanie asymetryczne, jak i podpisy cyfrowe. Dla zachowania bezpieczeństwa wymaga kluczy o długości minimum 2048 bitów oraz stosowania schematów dopełniania takich jak OAEP.

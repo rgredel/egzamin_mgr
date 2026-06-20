@@ -57,5 +57,21 @@ Najpopularniejszymi ramami postępowania w nurcie Agile są:
   - Kluczowy jest krótki czas wejścia na rynek (Time-to-Market) z wersją MVP (Minimum Viable Product).
   - Istnieje potrzeba szybkiego reagowania na działania konkurencji.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Tradycyjna - Waterfall (Liniowa, sztywna)
+        Plan["Planowanie"] --> Design["Projektowanie"] --> Dev["Kodowanie"] --> Test["Testy"] --> Deploy["Wdrożenie"]
+    end
+    subgraph Zwinna - Agile/Scrum (Iteracyjna, elastyczna)
+        Backlog["Product Backlog"] --> Sprint["Sprint: 1-4 tygodnie <br/> (Plan -> Kod -> Test -> Review)"]
+        Sprint --> Increment["Działający Przyrost Oprogramowania"]
+        Increment --> Backlog
+    end
+```
+
 ## Podsumowanie
 Metodyka tradycyjna i zwinna reprezentują odmienne filozofie zarządzania. Pierwsza stawia na kontrolę, plan i przewidywalność, natomiast druga na elastyczność, szybkość i adaptację do zmian. Wybór odpowiedniej metodyki powinien zależeć od specyfiki projektu, stabilności wymagań, technologii oraz kultury organizacyjnej klienta i zespołu wykonawczego.

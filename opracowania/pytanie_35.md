@@ -49,5 +49,21 @@ Aplikacje czasami muszą wymieniać informacje (np. aplikacja bankowa otwiera ap
 - W Androidzie odbywa się to za pomocą mechanizmu **Intents** (Intencji) oraz usług systemowych, gdzie nadawca może określić uprawnienia wymagane od odbiorcy.
 - W iOS wymiana danych jest skrajnie ograniczona do tzw. *URL Schemes* (wywołań adresów URL przypisanych do aplikacji) oraz ściśle zdefiniowanych rozszerzeń systemowych (*App Extensions*).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Android Sandbox (Oparty na UID Linuxa)
+        AppA["Aplikacja A <br/> (UID: 10001)"] -.->|Brak dostępu do plików B| DirectoryB[("Katalog Aplikacji B")]
+        AppB["Aplikacja B <br/> (UID: 10002)"] -.->|Brak dostępu do plików A| DirectoryA[("Katalog Aplikacji A")]
+    end
+    subgraph iOS Sandbox (Oparty na kontenerach i piaskownicy Seatbelt)
+        AppC["Aplikacja C"] -->|Wydzielony kontener| ContainerC["Bundle Container / Data Container"]
+        AppD["Aplikacja D"] -->|Wydzielony kontener| ContainerD["Bundle Container / Data Container"]
+    end
+```
+
 ## Podsumowanie
 Izolacja danych w systemach mobilnych opiera się na **piaskownicy (sandboxing)** wymuszanej na poziomie jądra systemu, systemowym **szyfrowaniu plików (FBE / Data Protection)** zintegrowanym ze sprzętem (Secure Enclave / TEE) oraz dedykowanych interfejsach **Keychain/Keystore**, które uniemożliwiają aplikacjom wzajemny podsłuch i kradzież danych sesyjnych.

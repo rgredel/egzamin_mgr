@@ -58,5 +58,19 @@ gdzie $s$ to czas spędzony na zadaniach sekwencyjnych w programie o powiększon
 **Kluczowy wniosek**:
 Prawo Gustafsona pokazuje bardziej optymistyczny obraz obliczeń równoległych. Przyspieszenie rośnie w nim niemal liniowo wraz z dodawaniem nowych procesorów, pod warunkiem, że rozmiar przetwarzanych danych skaluje się proporcjonalnie do mocy obliczeniowej.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Prawo Amdahla (Stały rozmiar zadania)
+        Amdahl["Maksymalne przyspieszenie jest ograniczone <br/> przez część programu, która musi być wykonana szeregowo"]
+    end
+    subgraph Prawo Gustafsona (Zmieniający się rozmiar zadania)
+        Gustafson["Rozmiar problemu rośnie wraz z liczbą rdzeni; <br/> pozwala na uzyskanie lepszej dokładności w stałym czasie"]
+    end
+```
+
 ## Podsumowanie
 Projektowanie algorytmów równoległych wymaga ciągłej optymalizacji dwóch parametrów: minimalizowania sekwencyjnej części kodu (zgodnie z prawem Amdahla) oraz ograniczania narzutów komunikacyjnych i synchronizacyjnych, aby utrzymać wysoką efektywność ($E_p$) przy skalowaniu systemu obliczeniowego.

@@ -48,5 +48,22 @@ Skanują aplikację poprzez wysyłanie tysięcy złośliwych zapytań (np. prób
 Badają kod źródłowy aplikacji pod kątem błędów bezpieczeństwa zanim zostanie ona uruchomiona:
 - **SonarQube / Semgrep**: Skanują repozytoria kodu źródłowego w poszukiwaniu podatności (np. zahardkodowane hasła, brak walidacji parametrów wejściowych).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+sequenceDiagram
+    actor Attacker as Atakujący
+    participant App as Podatna Aplikacja
+    participant System as System operacyjny / Środowisko
+
+    Attacker->>App: 1. Wysyła Exploit (wykorzystanie konkretnej luki)
+    Note over App: Aplikacja traci kontrolę nad przepływem wykonania
+    App->>System: 2. Uruchamia wstrzyknięty Payload (ładunek)
+    Note over System: Payload wykonuje złośliwy kod (np. shellcode)
+    System-->>Attacker: 3. Zwraca dostęp (np. Reverse Shell)
+```
+
 ## Podsumowanie
 W cyberbezpieczeństwie narzędzia są obosieczne. Te same skanery (np. OWASP ZAP) i frameworki (np. Metasploit) są wykorzystywane przez administratorów i pentesterów (tzw. *White Hat*) do zabezpieczania systemów, jak i przez cyberprzestępców (*Black Hat*) do wyszukiwania celów i przeprowadzania ataków. Skuteczna obrona wymaga regularnego audytowania aplikacji za pomocą tych narzędzi w celu usunięcia luk przed ich publicznym ujawnieniem.

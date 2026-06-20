@@ -57,5 +57,17 @@ Poniższa tabela prezentuje przyporządkowanie mierników (KPI) do określonych 
   *Cel*: Uratowanie firmy przed bankructwem, restrukturyzacja.
   *Kluczowe KPI*: Poziom kosztów stałych (redukcja o X%), rentowność poszczególnych oddziałów (likwidacja nierentownych), przepływy pieniężne (Cash Flow).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    BSC["Zrównoważona Karta Wyników (BSC)"] --> Fin["Perspektywa Finansowa <br/> (Rentowność, ARR, LTV/CAC)"]
+    BSC --> Client["Perspektywa Klienta <br/> (NPS, Churn Rate, Udział w rynku)"]
+    BSC --> Proc["Perspektywa Procesów Wewnętrznych <br/> (Time-to-Market, SLA, Skalowanie)"]
+    BSC --> Dev["Perspektywa Rozwoju i Nauki <br/> (Szkolenia, Retencja pracowników, MAU)"]
+```
+
 ## Podsumowanie
 Wdrożenie strategii wzrostu wymaga ciągłego monitorowania wskaźników finansowych i operacyjnych. Kluczowymi metrykami w branży technologicznej są **ARR** (odzwierciedlający stabilność przychodów), relacja **LTV do CAC** (sprawność ekonomiczna pozyskiwania klientów), **Churn Rate** (utrzymanie bazy) oraz operacyjny **Time-to-Market** (szybkość innowacji). Ich właściwa analityka pozwala korygować działania marketingowe i deweloperskie na bieżąco.

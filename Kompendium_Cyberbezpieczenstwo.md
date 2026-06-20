@@ -35,6 +35,24 @@ Kontener IoC jest sercem nowoczesnych aplikacji biznesowych. Jego główne zadan
   - **Request**: Jedna instancja na jedno żądanie HTTP (w aplikacjach webowych).
   - **Session**: Jedna instancja na sesję użytkownika HTTP.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Tradycyjne podejście (Silne sprzężenie)
+        A[Klient] -->|tworzy przez new| B[Serwis]
+        B -->|tworzy przez new| C[Repozytorium]
+    end
+    subgraph Odwrócenie Sterowania / Wstrzykiwanie Zależności (IoC/DI)
+        Container[Kontener IoC] -.->|1. Tworzy instancję| C2[Repozytorium]
+        Container -.->|2. Tworzy i wstrzykuje Repozytorium do| B2[Serwis]
+        A2[Klient] -->|3. Pobiera gotowy| B2
+    end
+    style Container fill:#e1f5fe,stroke:#0288d1,stroke-width:2px
+```
+
 ## Podsumowanie
 Stosowanie IoC i DI pozwala na tworzenie kodu o niskim stopniu sprzężenia (loose coupling), co znacząco zwiększa testowalność (łatwość mockowania zależności), modułowość i czytelność aplikacji. Kontener IoC zwalnia programistę z ręcznego tworzenia skomplikowanych drzew obiektów, automatyzując ten proces.
 
@@ -66,6 +84,18 @@ Praca w TDD odbywa się w mikro-krokach:
 ### 3. Bariery i ograniczenia TDD
 - **Czas i koszty początkowe**: Czas programisty potrzebny na dostarczenie pierwszej wersji kodu jest większy niż w przypadku pominięcia testów (choć w długiej perspektywie TDD skraca czas fazy stabilizacji i debugowania).
 - **Próg wejścia**: Wymaga dyscypliny i doświadczenia w projektowaniu testowalnego kodu. Złe testy (np. zbyt mocno powiązane z wewnętrzną implementacją klasy zamiast z jej kontraktem) utrudniają refaktoryzację.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+stateDiagram-v2
+    [*] --> RED: Napisz test, który nie przechodzi
+    RED --> GREEN: Napisz minimalny kod, aby test przeszedł
+    GREEN --> REFACTOR: Oczyść i zoptymalizuj kod (DRY, czytelność)
+    REFACTOR --> RED: Kolejna iteracja / Następna funkcja
+```
 
 ## Podsumowanie
 TDD to metodyka projektowa, w której testy pełnią rolę wymagań projektowych i specyfikacji. Zapewnia ona tworzenie oprogramowania o wysokiej jakości technicznej, ułatwiając ciągłą integrację i elastyczność w modyfikacji kodu.
@@ -117,6 +147,28 @@ Wzorzec składa się z czterech głównych elementów:
 - **Wady**:
   - Wprowadzenie dodatkowej, często nadmiarowej warstwy (boilerplate code) w mniejszych aplikacjach monolitycznych.
   - Potencjalne maskowanie problemów sieciowych, co może utrudnić debugowanie w skomplikowanych środowiskach.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+sequenceDiagram
+    actor Client as Klient (Prezentacja)
+    participant BD as Business Delegate
+    participant SL as Service Locator
+    participant BS as Business Service (Logika)
+
+    Client->>BD: wykonajUsługe()
+    rect rgb(240, 248, 255)
+        Note over BD, SL: Ukrycie szczegółów lokalizacji i sieci
+        BD->>SL: pobierzUsługę()
+        SL-->>BD: referencja do Usługi
+    end
+    BD->>BS: wywołajMetodęBiznesową()
+    BS-->>BD: wynik operacji
+    BD-->>Client: wynik (lub przetłumaczony błąd)
+```
 
 ## Podsumowanie
 Wzorzec Business Delegate jest kluczowym narzędziem do redukcji sprzężenia w aplikacjach o architekturze wielowarstwowej. Działa jako tarcza ochronna dla warstwy prezentacji, przejmując na siebie całą złożoność integracji sieciowej i wyszukiwania usług, co zwiększa czytelność i łatwość konserwacji kodu klienta.
@@ -191,6 +243,21 @@ To najwyższy poziom dojrzałości, który czyni API prawdziwie "RESTful". Zapew
   }
   ```
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    L3["Poziom 3: HATEOAS <br/> (Kontrola hipermediów, dynamiczne linki)"] --> L2["Poziom 2: Czasowniki HTTP <br/> (GET/POST/PUT/DELETE i statusy)"]
+    L2 --> L1["Poziom 1: Zasoby <br/> (Unikalne adresy URI dla każdego zasobu)"]
+    L1 --> L0["Poziom 0: RPC / Bagno POX <br/> (Jeden endpoint, tylko POST, XML/JSON)"]
+    style L3 fill:#81c784,stroke:#388e3c,stroke-width:2px
+    style L2 fill:#fff176,stroke:#fbc02d,stroke-width:2px
+    style L1 fill:#ffb74d,stroke:#f57c00,stroke-width:2px
+    style L0 fill:#e57373,stroke:#d32f2f,stroke-width:2px
+```
+
 ## Podsumowanie
 Większość komercyjnych usług sieciowych określanych jako REST API w rzeczywistości plasuje się na **Poziomie 2** modelu dojrzałości Richardsona. Wdrożenie **Poziomu 3 (HATEOAS)** jest rzadsze, ponieważ wymaga większego nakładu pracy przy tworzeniu i konsumowaniu API, jednak reprezentuje ono pełną, teoretyczną definicję stylu REST, zapewniając elastyczność i ewolucyjność API.
 
@@ -232,6 +299,27 @@ W polskim systemie prawnym i doktrynalnym wyróżnia się trzy główne kategori
 - **Incydent w podmiocie publicznym**: Incydent powodujący lub mogący spowodować obniżenie jakości bądź zakłócenie realizacji zadania publicznego (np. niedostępność e-usług urzędu gminy).
 - **Incydent istotny**: Incydent, który ma istotny wpływ na świadczenie usługi przez dostawcę usług cyfrowych lub operatora usługi kluczowej. Kryteria istotności są ściśle określone (np. liczba dotkniętych użytkowników, czas trwania).
 - **Incydent krytyczny**: Incydent skutkujący znaczną szkodą dla bezpieczeństwa lub obronności państwa, bezpieczeństwa publicznego, życia i zdrowia ludzi lub funkcjonowania instytucji państwowych (rozstrzyga o nim właściwy CSIRT poziomu krajowego).
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph CSIRT Poziomu Krajowego
+        ABW["CSIRT GOV <br/> (Agencja Bezpieczeństwa Wewnętrznego)"]
+        NASK["CSIRT NASK <br/> (Naukowa i Akademicka Sieć Komputerowa)"]
+        MON["CSIRT MON <br/> (Wojska Obrony Cyberprzestrzeni)"]
+    end
+    subgraph Sektory i Odbiorcy
+        ABW -->|Administracja rządowa & Infrastruktura krytyczna| IK["Operatorzy Usług Kluczowych (OUK)"]
+        NASK -->|Sektor cywilny, samorządy, obywatele| PC["Podmioty publiczne, DUC, Obywatele"]
+        MON -->|Resort obrony narodowej & Siły Zbrojne| SZ["Wojsko i Jednostki Wojskowe"]
+    end
+    style ABW fill:#ffecb3,stroke:#ffa000,stroke-width:2px
+    style NASK fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style MON fill:#ffebee,stroke:#d32f2f,stroke-width:2px
+```
 
 ## Podsumowanie
 Doktryna Cyberbezpieczeństwa RP określa podejście państwa do obrony w sieci, oparte na współpracy trójfilarowej (wojskowym, rządowym i cywilnym). System ten stawia jasne wymagania bezpieczeństwa przed podmiotami kluczowymi i publicznymi, narzucając im ścisłe ramy czasowe na zgłaszanie incydentów (zazwyczaj do 24 godzin od wykrycia) oraz nakazuje ciągłe monitorowanie zagrożeń w koordynacji z krajowymi zespołami CSIRT.
@@ -287,6 +375,25 @@ Tradycyjna taksonomia dzieli złośliwe oprogramowanie na kategorie według mech
 - **Charakterystyka**: RAT to trojan, który po instalacji otwiera ukryty port i nawiązuje połączenie zwrotne (reverse shell) do serwera C2 atakującego. Daje to cyberprzestępcy pełną kontrolę administracyjną nad zainfekowanym komputerem. Atakujący może modyfikować rejestr, pobierać i uruchamiać inne złośliwe pliki, kraść pliki lokalne czy użyć komputera ofiary jako punktu przesiadkowego (pivot) do dalszego ataku w sieci lokalnej.
 - **Metody obrony**: Filtrowanie ruchu wychodzącego na zaporach sieciowych (Firewall egress filtering), wykrywanie anomalii sieciowych (np. niespodziewane połączenia na nietypowe porty zewnętrzne), zasada minimalnych uprawnień dla użytkowników systemu.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    M["Złośliwe oprogramowanie (Malware)"] --> Prop["Sposób propagacji / uruchamiania"]
+    M --> Pay["Szkodliwe działanie (Payload)"]
+
+    Prop --> Vir["Wirusy <br/> (wymagają nosiciela)"]
+    Prop --> Worm["Robaki <br/> (samodzielne w sieci)"]
+    Prop --> Troj["Trojany <br/> (pod maską legalnej aplikacji)"]
+
+    Pay --> Rans["Ransomware <br/> (szyfrowanie i okup)"]
+    Pay --> Spy["Spyware / Keylogger <br/> (szpiegowanie i kradzież danych)"]
+    Pay --> Root["Rootkity <br/> (ukrywanie obecności w OS)"]
+    Pay --> Bot["Botnet / Boty <br/> (maszyny zombie, ataki DDoS)"]
+```
+
 ## Podsumowanie
 Współczesna taksonomia malware staje się coraz bardziej płynna, ponieważ złośliwe programy są modułowe – jedno zagrożenie może być jednocześnie trojanem (dropperem), pobierać robaka do propagacji w sieci lokalnej, instalować spyware w celu kradzieży danych, a na końcu zaszyfrować dysk jako ransomware. Skuteczna ochrona wymaga kompleksowego podejścia (Defense in Depth) na poziomie sieci, punktów końcowych oraz edukacji użytkowników.
 
@@ -339,6 +446,27 @@ Obrona przed atakami o dużym nasileniu jest trudna i wymaga zaawansowanych syst
 - **Centra czyszczące (Scrubbing Centers)**: Rozwiązania dostawców chmurowych (np. Cloudflare, AWS Shield), gdzie cały ruch sieciowy przechodzi przez serwery filtrujące, które odrzucają pakiety DoS na podstawie sygnatur oraz analizy behawioralnej, wpuszczając do serwera docelowego jedynie czysty ruch.
 - **Rate Limiting i WAF (Web Application Firewall)**: Ograniczanie liczby połączeń z jednego adresu IP oraz analiza reguł aplikacji (np. blokowanie ruchu wykazującego cechy narzędzi typu Slowloris).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Kategoria ataku
+        V["1. Wolumetryczne <br/> (np. UDP Flood, DNS/NTP Amplification)"]
+        P["2. Na protokoły <br/> (np. SYN Flood, Ping of Death)"]
+        A["3. Na warstwę aplikacji <br/> (np. Slowloris, HTTP Flood)"]
+    end
+    subgraph Struktura ataku DDoS
+        Attacker["Atakujący"] -->|Sterowanie| C2["Serwer C2 (Command & Control)"]
+        C2 -->|Instrukcje| B1["Zombie Bot 1"]
+        C2 -->|Instrukcje| B2["Zombie Bot 2"]
+        B1 & B2 -->|Zmasowany sztuczny ruch| Victim["Ofiara (Serwer docelowy)"]
+    end
+    style Attacker fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style Victim fill:#eceff1,stroke:#37474f,stroke-width:2px
+```
+
 
 ---
 
@@ -386,6 +514,21 @@ Zasada ta nakłada na administratora obowiązek zapewnienia odpowiedniego bezpie
 Jest to zasada kluczowa, spajająca pozostałe. Administrator jest nie tylko odpowiedzialny za przestrzeganie wszystkich sześciu zasad opisanych powyżej, ale musi być w stanie **wykazać (udowodnić)** ich przestrzeganie przed organem nadzorczym (w Polsce jest to UODO - Urząd Ochrony Danych Osobowych).
 *Dowody rozliczalności*: Posiadanie Rejestru Czynności Przetwarzania (RCP), procedur zgłaszania wycieków (w ciągu 72 godzin), analiz ryzyka (DPIA) czy powołanie Inspektora Ochrony Danych (IOD).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph LR
+    R["7 Zasad RODO"] --> Z1["1. Zgodność z prawem, rzetelność i przejrzystość"]
+    R --> Z2["2. Ograniczenie celu"]
+    R --> Z3["3. Minimalizacja danych"]
+    R --> Z4["4. Prawidłowość"]
+    R --> Z5["5. Ograniczenie przechowywania"]
+    R --> Z6["6. Integralność i poufność (Bezpieczeństwo)"]
+    R --> Z7["7. Rozliczalność (Obowiązek wykazania zgodności)"]
+```
+
 ## Podsumowanie
 Siedem zasad RODO stanowi ramy projektowe dla współczesnych inżynierów oprogramowania. Zgodnie z nimi, systemy IT powinny domyślnie chronić prywatność (**Privacy by Default** – np. domyślnie niezaznaczone zgody marketingowe) oraz wbudowywać mechanizmy ochrony danych w samą strukturę aplikacji (**Privacy by Design** – np. szyfrowanie haseł w bazie danych przy użyciu algorytmów typu bcrypt).
 
@@ -425,6 +568,21 @@ Aplikacje internetowe stanowią główny cel cyberataków z kilku kluczowych pow
 2. **Architektura klient-serwer i brak kontroli nad klientem**: Kod frontendu (HTML/JS) jest w pełni kontrolowany przez użytkownika. Atakujący może dowolnie modyfikować żądania HTTP, nagłówki, ciasteczka czy parametry formularza za pomocą narzędzi deweloperskich lub proxy (np. Burp Suite). Zabezpieczenia zaimplementowane wyłącznie po stronie klienta są bezużyteczne.
 3. **Złożoność techniczna i łańcuch dostaw (Software Supply Chain)**: Współczesne aplikacje webowe korzystają z tysięcy zewnętrznych pakietów (np. npm, Maven, NuGet). Błąd w jednej małej bibliotece (przykład podatności w bibliotece `Log4j` w Javie) natychmiast czyni podatną całą aplikację.
 4. **Presja biznesowa i brak edukacji**: Często priorytetem w projektach IT jest czas dostarczenia na rynek (*time-to-market*). Programiści skupiają się na funkcjonalnościach biznesowych, a nie na bezpieczeństwie. Dodatkowo, brak systematycznego szkolenia z zakresu bezpiecznego kodowania (*Secure Coding*) sprawia, że w kodzie powielane są te same klasyczne błędy.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Attacker["Atakujący"] -->|1. Manipulacja żądaniami HTTP| Client["Klient / Przeglądarka <br/> (brak kontroli wejścia)"]
+    Client -->|2. Wstrzykiwanie kodu / złośliwe wejście| Server["Serwer Aplikacji Webowej"]
+    Server -->|SQL Injection| DB[("Baza Danych")]
+    Server -->|Command Injection| OS["System Operacyjny Serwera"]
+    Server -->|Błędy bibliotek| Deps["Zależności firm trzecich (npm, Maven itp.)"]
+    style Attacker fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style Deps fill:#fff3e0,stroke:#ef6c00,stroke-width:1px
+```
 
 ## Podsumowanie
 Podatności są stałym elementem cyklu życia oprogramowania. Zapewnienie bezpieczeństwa aplikacji internetowej nie jest jednorazowym zadaniem, ale ciągłym procesem (DevSecOps), który obejmuje automatyczne testy kodu (SAST/DAST), walidację wszystkich danych wejściowych po stronie serwera oraz regularne audyty i testy penetracyjne.
@@ -481,6 +639,23 @@ Skanują aplikację poprzez wysyłanie tysięcy złośliwych zapytań (np. prób
 #### C. Narzędzia analizy statycznej kodu (SAST):
 Badają kod źródłowy aplikacji pod kątem błędów bezpieczeństwa zanim zostanie ona uruchomiona:
 - **SonarQube / Semgrep**: Skanują repozytoria kodu źródłowego w poszukiwaniu podatności (np. zahardkodowane hasła, brak walidacji parametrów wejściowych).
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+sequenceDiagram
+    actor Attacker as Atakujący
+    participant App as Podatna Aplikacja
+    participant System as System operacyjny / Środowisko
+
+    Attacker->>App: 1. Wysyła Exploit (wykorzystanie konkretnej luki)
+    Note over App: Aplikacja traci kontrolę nad przepływem wykonania
+    App->>System: 2. Uruchamia wstrzyknięty Payload (ładunek)
+    Note over System: Payload wykonuje złośliwy kod (np. shellcode)
+    System-->>Attacker: 3. Zwraca dostęp (np. Reverse Shell)
+```
 
 ## Podsumowanie
 W cyberbezpieczeństwie narzędzia są obosieczne. Te same skanery (np. OWASP ZAP) i frameworki (np. Metasploit) są wykorzystywane przez administratorów i pentesterów (tzw. *White Hat*) do zabezpieczania systemów, jak i przez cyberprzestępców (*Black Hat*) do wyszukiwania celów i przeprowadzania ataków. Skuteczna obrona wymaga regularnego audytowania aplikacji za pomocą tych narzędzi w celu usunięcia luk przed ich publicznym ujawnieniem.
@@ -547,6 +722,30 @@ Obrona przed XSS polega na uniemożliwieniu przeglądarce interpretowania danych
 
 4. **Wdrożenie Content Security Policy (CSP)**:
    Nagłówek HTTP, który instruuje przeglądarkę, skąd może pobierać i uruchamiać skrypty. Przykładowo, polityka `Content-Security-Policy: default-src 'self';` zablokuje uruchamianie jakichkolwiek skryptów wplecionych bezpośrednio w kod HTML (tzw. inline scripts) oraz skryptów z zewnętrznych, niezaufanych domen.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    rect rgb(240, 240, 240)
+        Note over Attacker, Victim: Typ A: Reflected XSS (Odbity)
+        Attacker->>Victim: Wyślij spreparowany link ze skryptem
+        Victim->>Server: Kliknięcie i wysłanie zapytania z parametrem
+        Server-->>Victim: Odesłanie odpowiedzi zawierającej złośliwy skrypt
+        Note over Victim: Przeglądarka ofiary wykonuje skrypt
+    end
+    rect rgb(255, 245, 245)
+        Note over Attacker, Server: Typ B: Stored XSS (Trwały)
+        Attacker->>Server: Zapisz złośliwy skrypt w bazie (np. w komentarzu)
+        Victim->>Server: Wyświetlenie strony z zanieczyszczonym wpisem
+        Server-->>Victim: Odesłanie strony ze skryptem z bazy danych
+        Note over Victim: Przeglądarka ofiary wykonuje skrypt
+    end
+    Victim->>Attacker: Kradzież ciasteczek sesyjnych / danych
+```
 
 
 ---
@@ -624,6 +823,26 @@ Obrona przed SQLi jest relatywnie prosta, o ile zasady są konsekwentnie stosowa
 4. **Walidacja danych wejściowych**:
    Wprowadzenie białej listy dopuszczalnych znaków oraz weryfikacja typów danych (np. upewnienie się, że parametr `id` zawiera wyłącznie cyfry przed wykonaniem zapytania).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Podatna Aplikacja (Konkatenacja)
+        InputA["Input: admin' OR '1'='1"] --> QueryA["SQL: SELECT * FROM users WHERE user = 'admin' OR '1'='1'"]
+        QueryA --> DBA[("Baza Danych")]
+        DBA --> ResultA["Zwraca wszystkie rekordy (logowanie bez hasła)"]
+    end
+    subgraph Bezpieczna Aplikacja (Prepared Statements)
+        InputB["Input: admin' OR '1'='1"] --> QueryB["SQL: SELECT * FROM users WHERE user = ?"]
+        QueryB --> DBB[("Baza Danych")]
+        DBB --> ResultB["Szuka użytkownika o dokładnym loginie - bezpieczne"]
+    end
+    style QueryA fill:#ffebee,stroke:#c62828,stroke-width:1px
+    style QueryB fill:#e8f5e9,stroke:#2e7d32,stroke-width:1px
+```
+
 
 ---
 
@@ -672,6 +891,24 @@ Wiele protokołów sieciowych (takich jak ARP, DNS czy bazowy protokół IP) zos
 - **Metody obrony**:
   - Konfiguracja reguł **Egress/Ingress Filtering** na routerach brzegowych (blokowanie pakietów wychodzących z sieci lokalnej, które mają adresy źródłowe spoza tej sieci, oraz pakietów wchodzących mających adresy źródłowe z wewnątrz – standard **BCP 38**).
   - Stosowanie mechanizmu **uRPF** (Unicast Reverse Path Forwarding).
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph LR
+    subgraph Man-in-the-Middle (ARP Spoofing)
+        Victim["Ofiara"] -.->|Błędny wpis ARP| Attacker["Atakujący (MitM)"]
+        Attacker -.-> Router["Brama domyślna"]
+        Victim -.-x|Przejęty i zmodyfikowany ruch| Router
+    end
+    subgraph Skanowanie portów (SYN Scan)
+        Scanner["Atakujący"] -->|Pakiety SYN| Target["Cel"]
+        Target -->|SYN-ACK / Port otwarty| Scanner
+        Target -->|RST / Port zamknięty| Scanner
+    end
+```
 
 
 ---
@@ -729,6 +966,22 @@ Ponieważ nie da się zainstalować antywirusa w ludzkim mózgu, obrona musi ł�
    - **DKIM (DomainKeys Identified Mail)**: Podpisuje maile kryptograficznie.
    - **DMARC (Domain-based Message Authentication, Reporting and Conformance)**: Określa, co serwer odbiorcy ma zrobić z mailem, który nie przeszedł testów SPF/DKIM.
 4. **Zasada Zero Trust (Brak zaufania)**: Każda nietypowa prośba (np. zmiana numeru konta do faktury, prośba o podanie hasła) musi być zweryfikowana innym kanałem komunikacji (np. osobista rozmowa lub oddzwonienie na oficjalny numer).
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Recon["1. Rozpoznanie (OSINT) <br/> Zebranie danych o celu (np. social media)"] --> Hook["2. Nawiązanie kontaktu <br/> Telefon/E-mail z wiarygodną historią (pretekst)"]
+    Hook --> Play["3. Eksploatacja (Atak) <br/> Nakłonienie do wykonania akcji (np. przelew, makro)"]
+    Play --> Exit["4. Wyjście (Zatarcie śladów) <br/> Zakończenie interakcji przed wzbudzeniem podejrzeń"]
+
+    style Recon fill:#e3f2fd,stroke:#1565c0,stroke-width:1px
+    style Hook fill:#e3f2fd,stroke:#1565c0,stroke-width:1px
+    style Play fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style Exit fill:#e3f2fd,stroke:#1565c0,stroke-width:1px
+```
 
 
 ---
@@ -792,6 +1045,17 @@ Współczesne ataki łączą te elementy w łańcuch infekcji:
 [ TROJAN ] (Złośliwy kod) -> Użytkownik uruchamia plik, który potajemnie przejmuje komputer (RAT)
 ```
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Spam["Spam <br/> (Masowa, niechciana korespondencja)"] -->|Jeżeli ma złośliwy cel wyłudzenia| Phishing["Phishing <br/> (Wiadomości wyłudzające dane/hasła)"]
+    Phishing -->|Często dostarcza załącznik z| Trojan["Trojan <br/> (Szkodliwe oprogramowanie pod maską legalnego)"]
+    style Phishing fill:#ffebee,stroke:#c62828,stroke-width:2px
+```
+
 
 ---
 
@@ -838,6 +1102,19 @@ W przeszłości stosowano metody, które dziś nie są uznawane za rzeczywiste z
 - **Ukrywanie SSID**: Wyłączenie rozgłaszania nazwy sieci w ramkach typu Beacon. Jest to nieskuteczne, ponieważ nazwa sieci (SSID) jest przesyłana jawnym tekstem w ramkach żądania asocjacji (Association Requests), gdy legalne urządzenia próbują się połączyć.
 - **Filtrowanie adresów MAC**: Blokowanie urządzeń o nieznanych adresach fizycznych MAC. Adresy te są przesyłane otwartym tekstem w nagłówkach ramek 802.11. Atakujący może łatwo odczytać dozwolony adres MAC i podrobić go na swoim urządzeniu (tzw. *MAC Spoofing*).
 - **WPS (Wi-Fi Protected Setup)**: Standard ułatwiający łączenie urządzeń (np. za pomocą 8-cyfrowego kodu PIN). Posiada krytyczną lukę projektową (podatność na atak brute-force za pomocą narzędzia *Reaver*), umożliwiającą odzyskanie hasła sieci w kilka godzin. **Powinien być bezwzględnie wyłączony**.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph LR
+    WEP["WEP <br/> (Złamany, zakazany)"] --> WPA["WPA <br/> (Tymczasowy, RC4/TKIP)"]
+    WPA --> WPA2["WPA2 <br/> (Standard, AES-CCMP, KRACK)"]
+    WPA2 --> WPA3["WPA3 <br/> (Najnowszy, SAE/Dragonfly, Forward Secrecy)"]
+    style WEP fill:#ffebee,stroke:#c62828,stroke-width:1px
+    style WPA3 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+```
 
 ## Podsumowanie
 W celu zapewnienia bezpieczeństwa sieci Wi-Fi należy bezwzględnie wyłączyć obsługę protokołów WEP, WPA oraz WPS. Rekomendowaną konfiguracją jest stosowanie **WPA3-SAE** dla sieci domowych oraz **WPA3-Enterprise** (z uwierzytelnianiem 802.1X i serwerem RADIUS) w środowiskach biznesowych.
@@ -896,6 +1173,24 @@ Właściwie zaprojektowane metryki bezpieczeństwa powinny być:
 - **Łatwe do pozyskania**: Proces zbierania danych powinien być w miarę możliwości zautomatyzowany, aby nie obciążać administratorów pracą manualną.
 - **Zrozumiałe dla biznesu**: Powinny pozwalać na przełożenie ryzyka technicznego na ryzyko biznesowe i finansowe (np. czas przestoju systemu przeliczony na straty finansowe).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    CIA["Filar Bezpieczeństwa (CIA Triad)"] --> C["Poufność (Confidentiality)"]
+    CIA --> I["Integralność (Integrity)"]
+    CIA --> A["Dostępność (Availability)"]
+
+    subgraph Miary operacyjne
+        MTBF["MTBF <br/> (Średni czas między awariami)"]
+        MTTR["MTTR <br/> (Średni czas naprawy)"]
+        RTO["RTO <br/> (Maksymalny dopuszczalny czas przestoju)"]
+        RPO["RPO <br/> (Maksymalna dopuszczalna utrata danych)"]
+    end
+```
+
 ## Podsumowanie
 Miary bezpieczeństwa systemu komputerowego to niezbędne narzędzie zarządcze. Pozwalają one na przejście od reaktywnego gaszenia pożarów do proaktywnego zarządzania ryzykiem. Skuteczna obrona opiera się na ciągłym monitorowaniu kluczowych wskaźników, takich jak czas wykrycia (MTTD), czas reakcji (MTTR) oraz stopień załatania podatności (Patch Latency).
 
@@ -952,6 +1247,20 @@ Dla każdego wygenerowanego przez narzędzie zagrożenia, zespół projektowy mu
 3. **Needs Investigation**: Wymaga dalszej analizy.
 
 Narzędzie umożliwia wygenerowanie kompletnego raportu (w formacie HTML), który służy jako dokumentacja bezpieczeństwa dla audytorów oraz wytyczne dla programistów wdrażających system.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    S["Spoofing (Podszywanie się)"] -->|Narusza| Auth["Uwierzytelnianie"]
+    T["Tampering (Manipulacja)"] -->|Narusza| Int["Integralność"]
+    R["Repudiation (Zaprzeczalność)"] -->|Narusza| NonRep["Niezaprzeczalność"]
+    I["Info Disclosure (Ujawnienie info)"] -->|Narusza| Conf["Poufność"]
+    D["Denial of Service (Odmowa usługi)"] -->|Narusza| Avail["Dostępność"]
+    E["Elevation of Privilege (Podniesienie upr.)"] -->|Narusza| Author["Autoryzacja / Uprawnienia"]
+```
 
 ## Podsumowanie
 Microsoft Threat Modeling Tool to potężne, ustrukturyzowane narzędzie, które przekłada architekturę logiczną systemu na konkretne zagrożenia bezpieczeństwa przy użyciu metodologii STRIDE. Pomaga ono deweloperom i architektom myśleć jak atakujący, co pozwala na eliminację luk bezpieczeństwa na najwcześniejszym etapie SDLC.
@@ -1011,6 +1320,22 @@ Następnie silnik FAIR wykorzystuje **symulację Monte Carlo**, która wykonuje 
 - Średnią (oczekiwaną) wartość strat rocznych (ALE - Annual Loss Expectancy).
 - Najgorszy możliwy scenariusz (np. z prawdopodobieństwem 5%).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Risk["Ryzyko (RISK)"] --> LEF["Częstotliwość Zdarzeń Straty (Loss Event Frequency)"]
+    Risk --> PLM["Rozmiar Straty (Probable Loss Magnitude)"]
+
+    LEF --> TEF["Częstotliwość kontaktu z zagrożeniem (Threat Event Frequency)"]
+    LEF --> V["Podatność (Vulnerability)"]
+
+    PLM --> Prim["Straty Pierwotne (Primary Loss)"]
+    PLM --> Sec["Straty Wtórne (Secondary Loss)"]
+```
+
 ## Podsumowanie
 Model FAIR to potężne narzędzie łączące techniczną inżynierię bezpieczeństwa z zarządzaniem biznesowym. Pozwala on na precyzyjne uzasadnienie budżetów bezpieczeństwa. Zamiast argumentować: „musimy kupić ten system, bo bez niego ryzyko jest wysokie”, oficer bezpieczeństwa (CISO) korzystający z FAIR może powiedzieć: „wydanie 50 000 PLN na to zabezpieczenie zmniejszy naszą roczną oczekiwaną stratę z tytułu wycieku danych z 400 000 PLN do 120 000 PLN, co daje oszczędność 280 000 PLN rocznie”.
 
@@ -1062,6 +1387,17 @@ Wdrożenie bibliotek ataków do procesów bezpieczeństwa organizacji (podejści
 
 4. **Wymiana wiedzy o zagrożeniach (Cyber Threat Intelligence - CTI)**:
    Biblioteki dają jednolity, znormalizowany słownik pojęć. Dzięki temu raporty o nowych zagrożeniach publikowane na świecie mogą od razu referować do konkretnych numerów technik (np. T1190 – Exploit Public-Facing Application), co ułatwia automatyzację i konfigurację systemów ochronnych.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph LR
+    CAPEC["CAPEC <br/> (Wzorce ataków od strony aplikacji)"] -->|Mapowanie| MITRE["MITRE ATT&CK <br/> (Taktyki i techniki od strony systemu/sieci)"]
+    MITRE -->|Wdrażanie reguł wykrywania| SIEM["Zabezpieczenia / Monitorowanie <br/> (SIEM / EDR / SOC)"]
+    SIEM -->|Identyfikacja luk w obronie| Assessment["Ocena stanu bezpieczeństwa i testy"]
+```
 
 ## Podsumowanie
 Biblioteki ataków (szczególnie MITRE ATT&CK) stanowią fundament nowoczesnego cyberbezpieczeństwa. Pozwalają organizacjom odejść od reaktywnego podejścia sygnaturowego na rzecz proaktywnego monitorowania zachowań i technik stosowanych przez napastników. Integrują one pracę architektów oprogramowania, administratorów sieci, testerów penetracyjnych oraz analityków systemów detekcji, tworząc spójne i mierzalne środowisko obronne.
@@ -1128,6 +1464,22 @@ Najpopularniejszymi ramami postępowania w nurcie Agile są:
   - Kluczowy jest krótki czas wejścia na rynek (Time-to-Market) z wersją MVP (Minimum Viable Product).
   - Istnieje potrzeba szybkiego reagowania na działania konkurencji.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Tradycyjna - Waterfall (Liniowa, sztywna)
+        Plan["Planowanie"] --> Design["Projektowanie"] --> Dev["Kodowanie"] --> Test["Testy"] --> Deploy["Wdrożenie"]
+    end
+    subgraph Zwinna - Agile/Scrum (Iteracyjna, elastyczna)
+        Backlog["Product Backlog"] --> Sprint["Sprint: 1-4 tygodnie <br/> (Plan -> Kod -> Test -> Review)"]
+        Sprint --> Increment["Działający Przyrost Oprogramowania"]
+        Increment --> Backlog
+    end
+```
+
 ## Podsumowanie
 Metodyka tradycyjna i zwinna reprezentują odmienne filozofie zarządzania. Pierwsza stawia na kontrolę, plan i przewidywalność, natomiast druga na elastyczność, szybkość i adaptację do zmian. Wybór odpowiedniej metodyki powinien zależeć od specyfiki projektu, stabilności wymagań, technologii oraz kultury organizacyjnej klienta i zespołu wykonawczego.
 
@@ -1185,6 +1537,19 @@ Wykorzystują modele matematyczne i statystykę historyczną.
   Dla każdego zadania szacuje się trzy wartości czasu/kosztu: optymistyczną ($O$), pesymistyczną ($P$) oraz najbardziej prawdopodobną ($M$). Ostateczną estymację wylicza się ze wzoru:
   $$E = \frac{O + 4M + P}{6}$$
   Pozwala to uwzględnić ryzyko i niepewność w obliczeniach.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Est["Metody Estymacji Kosztów"] --> Analogy["Analogia <br/> (Porównanie z minionymi projektami)"]
+    Est --> Expert["Sąd ekspercki <br/> (Metoda Delficka, konsensus)"]
+    Est --> Parametric["Parametryczne <br/> (Wzory matematyczne np. COCOMO)"]
+    Est --> ThreePoint["Szacowanie trójpunktowe <br/> (optymistyczny, pesymistyczny, realistyczny)"]
+    Est --> BottomUp["Oddolne (Bottom-Up) <br/> (Szacowanie cząstkowych zadań WBS)"]
+```
 
 ## Podsumowanie
 W praktyce zarządzania projektami IT nie należy opierać się wyłącznie na jednej metodzie. W fazie koncepcyjnej (inicjacji) stosuje się estymację analogową lub top-down. Po zebraniu wymagań tworzy się strukturę WBS i przeprowadza dokładną estymację oddolną (Bottom-Up) przy użyciu metody PERT, co pozwala na precyzyjne określenie budżetu i harmonogramu projektu.
@@ -1246,6 +1611,20 @@ Na ich podstawie oblicza się wskaźniki efektywności:
 Metody stosowane głównie w projektach prowadzonych w metodyce Scrum:
 - **Burn-down Chart (Wykres Spalania)**: Wykres pokazujący ilość pracy pozostałej do wykonania w Sprincie w stosunku do czasu. Pionowa oś reprezentuje pozostały zakres (np. w Story Pointach), a pozioma oś – kolejne dni Sprintu. Linia wykresu powinna schodzić do zera. Odchylenie w górę od linii idealnej oznacza opóźnienie prac.
 - **Burn-up Chart**: Wykres pokazujący ilość ukończonej pracy w czasie na tle całkowitego zakresu projektu. Pomaga w wizualizacji przyrostu zakresu (*scope creep*) – jeśli całkowita linia zakresu rośnie w górę, oznacza to dodawanie nowych wymagań przez klienta w trakcie projektu.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Fazy["Fazy realizacji projektu"] --> Wyt["Wytwórczy <br/> (Analiza -> Projekt -> Implementacja -> Testy -> Wdrożenie)"]
+    Fazy --> Wdr["Wdrożeniowy <br/> (Przygotowanie -> Migracja -> Konfiguracja -> Akceptacja -> Go-Live)"]
+
+    Sledzenie["Metody Śledzenia Postępu"] --> Gantt["Wykres Gantta <br/> (harmonogram i zależności)"]
+    Sledzenie --> Burndown["Wykres Burndown <br/> (spalanie zadań w sprincie)"]
+    Sledzenie --> EVM["EVM (Earned Value Management) <br/> (analiza odchyleń kosztu i czasu)"]
+```
 
 ## Podsumowanie
 Wdrożenie i wytworzenie oprogramowania różnią się zakresem i wyzwaniami – wytworzenie skupia się na programowaniu, natomiast wdrożenie na analizie procesów biznesowych i migracji danych. Do śledzenia postępu w projektach tradycyjnych (Waterfall) stosuje się Wykresy Gantta oraz wskaźniki EVM (SPI, CPI), natomiast w projektach zwinnych (Agile) podstawą są tablice zadań i wykresy spalania (Burn-down).
@@ -1315,6 +1694,26 @@ Podejście probabilistyczne, stosowane gdy czasy trwania zadań są trudne do pr
   4. Po podstawieniu średnich czasów ($t_e$) jako stałych czasów trwania zadań, wyznacza się ścieżkę krytyczną dokładnie tak samo, jak w metodzie CPM.
   5. Sumując wariancje zadań na ścieżce krytycznej, można obliczyć odchylenie standardowe projektu i oszacować prawdopodobieństwo ukończenia projektu w określonym terminie (korzystając z rozkładu normalnego).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph LR
+    A["Zadanie A <br/> t = 3 dni"] --> B["Zadanie B <br/> t = 4 dni"]
+    A --> C["Zadanie C <br/> t = 2 dni"]
+    B --> D["Zadanie D <br/> t = 3 dni"]
+    C --> D
+    D --> E["Zadanie E <br/> t = 2 dni"]
+
+    linkStyle 0,2,4 stroke:#d32f2f,stroke-width:3px;
+    style A fill:#ffebee,stroke:#d32f2f
+    style B fill:#ffebee,stroke:#d32f2f
+    style D fill:#ffebee,stroke:#d32f2f
+    style E fill:#ffebee,stroke:#d32f2f
+    Note over A,E: Ścieżka Krytyczna (12 dni): A -> B -> D -> E
+```
+
 ## Podsumowanie
 Struktura podziału pracy (WBS) pozwala na zdekomponowanie skomplikowanego projektu na małe zadania. Następnie, poprzez połączenie ich zależnościami logicznymi, tworzy się sieć powiązań. Wyznaczenie ścieżki krytycznej przy użyciu algorytmów CPM (dla stałych czasów) lub PERT (dla zakresów czasów) pozwala zidentyfikować kluczowe zadania decydujące o terminie końcowym projektu i zminimalizować ryzyko opóźnień.
 
@@ -1369,6 +1768,22 @@ Systemy rozproszone charakteryzują się brakiem wspólnej pamięci fizycznej (k
   Tradycyjne logowanie nie sprawdza się, gdy zapytanie użytkownika przechodzi przez 20 mikrousług na różnych serwerach. Wymaga to wdrożenia skomplikowanych systemów rozproszonego śledzenia (Distributed Tracing, np. Zipkin, Jaeger) oraz centralizacji logów (np. stos ELK).
 - **Synchronizacja i porządkowanie zdarzeń**:
   Z powodu braku globalnego zegara fizycznego określenie, która operacja zapisu w bazie danych wydarzyła się pierwsza, wymaga stosowania skomplikowanych algorytmów synchronizacji (np. algorytm Paxos, Raft lub zegary wektorowe).
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Monolit / System Centralny
+        Client1["Klient 1"] & Client2["Klient 2"] --> Server["Pojedynczy Serwer Bazy <br/> (SPOF - Single Point of Failure)"]
+    end
+    subgraph System Rozproszony
+        C1["Klient 1"] & C2["Klient 2"] --> LoadBalancer["Load Balancer"]
+        LoadBalancer --> Node1["Węzeł 1"] & Node2["Węzeł 2"] & Node3["Węzeł 3"]
+        Node1 <--> Node2 <--> Node3
+    end
+```
 
 ## Podsumowanie
 Systemy rozproszone to fundament nowoczesnego IT, na którym opierają się największe platformy na świecie (Netflix, Google, Facebook). Zapewniają one niezrównaną skalowalność i odporność na awarie, jednak ceną za te korzyści jest drastyczny wzrost złożoności kodu, konieczność radzenia sobie z problemem spójności danych oraz trudniejsze administrowanie infrastrukturą.
@@ -1432,6 +1847,20 @@ Wprowadzony przez Google model do przetwarzania wielkich zbiorów danych (Big Da
 - **Faza Map**: Podział dużego problemu na małe części i równoległe przetworzenie ich przez węzły robotnicze do postaci par klucz-wartość.
 - **Faza Reduce**: Agregacja pośrednich wyników przez węzły redukujące na podstawie klucza.
 - **Narzędzia**: Apache Hadoop, Apache Spark.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Pamięć Współdzielona (np. OpenMP)
+        P1["Procesor 1"] & P2["Procesor 2"] & P3["Procesor 3"] --> SharedMem[("Wspólna Pamięć RAM")]
+    end
+    subgraph Przesyłanie Wiadomości (np. MPI)
+        NodeA["Węzeł A: Procesor 1 + RAM A"] <-->|Komunikacja sieciowa (MPI Send/Recv)| NodeB["Węzeł B: Procesor 2 + RAM B"]
+    end
+```
 
 ## Podsumowanie
 Współczesne programowanie równoległe opiera się na dopasowaniu modelu programowania do architektury sprzętowej. Do obliczeń na komputerach wielordzeniowych stosuje się pamięć współdzieloną (OpenMP/wątki), w klastrach rozproszonych standardem jest przekazywanie komunikatów (MPI), w obliczeniach naukowych i sztucznej inteligencji dominuje równoległość danych na kartach GPU (CUDA), natomiast w systemach wysoko-dostępnych i mikrousługach popularność zyskuje model aktorów.
@@ -1498,6 +1927,20 @@ gdzie $s$ to czas spędzony na zadaniach sekwencyjnych w programie o powiększon
 
 **Kluczowy wniosek**:
 Prawo Gustafsona pokazuje bardziej optymistyczny obraz obliczeń równoległych. Przyspieszenie rośnie w nim niemal liniowo wraz z dodawaniem nowych procesorów, pod warunkiem, że rozmiar przetwarzanych danych skaluje się proporcjonalnie do mocy obliczeniowej.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Prawo Amdahla (Stały rozmiar zadania)
+        Amdahl["Maksymalne przyspieszenie jest ograniczone <br/> przez część programu, która musi być wykonana szeregowo"]
+    end
+    subgraph Prawo Gustafsona (Zmieniający się rozmiar zadania)
+        Gustafson["Rozmiar problemu rośnie wraz z liczbą rdzeni; <br/> pozwala na uzyskanie lepszej dokładności w stałym czasie"]
+    end
+```
 
 ## Podsumowanie
 Projektowanie algorytmów równoległych wymaga ciągłej optymalizacji dwóch parametrów: minimalizowania sekwencyjnej części kodu (zgodnie z prawem Amdahla) oraz ograniczania narzutów komunikacyjnych i synchronizacyjnych, aby utrzymać wysoką efektywność ($E_p$) przy skalowaniu systemu obliczeniowego.
@@ -1580,6 +2023,22 @@ Zrównoleglanie obliczeń na kartach graficznych (GPU) pozwala na jednoczesne ur
 | **CUDA** | Rozproszona (CPU/GPU) | Transfery pamięciowe PCIe | Akceleracja GPU (NVIDIA), AI / Deep Learning |
 | **OpenCL** | Heterogeniczna | Transfery pamięciowe | Przenośne obliczenia na kartach różnych marek |
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Env["Środowiska programowania równoległego"] --> SM["Pamięć współdzielona"]
+    Env --> DM["Pamięć rozproszona"]
+    Env --> GPU["Akceleratory graficzne"]
+
+    SM --> OpenMP["OpenMP <br/> (dyrektywy kompilatora, łatwy w użyciu)"]
+    SM --> Pthreads["Pthreads / Wątki <br/> (niskopoziomowe watki systemowe)"]
+    DM --> MPI["MPI <br/> (Message Passing Interface, klastry)"]
+    GPU --> CUDA["CUDA / OpenCL <br/> (tysiące rdzeni karty graficznej)"]
+```
+
 ## Podsumowanie
 Współczesne wyzwania obliczeniowe wymagają od programistów znajomości wielu środowisk. W celu pełnego wykorzystania nowoczesnego superkomputera często stosuje się **programowanie hybrydowe (MPI + OpenMP + CUDA)**, gdzie MPI odpowiada za komunikację między serwerami, OpenMP za wielowątkowość w ramach jednego serwera, a CUDA przyspiesza najcięższe obliczenia matematyczne na kartach GPU.
 
@@ -1631,6 +2090,23 @@ Aby obronić się przed analizą częstotliwościową, opracowano szyfry wieloal
 Szyfr Vigenère'a przez stulecia uchodził za nie do złamania. Został złamany w XIX w. przy użyciu metod:
 - **Test Kasiski'ego**: Szukanie powtarzających się sekwencji znaków w szyfrogramie. Odległości między nimi wskazują na potencjalną długość słowa-klucza ($d$). Po ustaleniu $d$, szyfrogram dzieli się na $d$ podtekstów i każdy z nich łamie się osobno klasyczną analizą częstotliwościową.
 - **Wskaźnik koincydencji (metoda Friedmana)**: Statystyczne badanie rozkładu liter pozwalające na matematyczne wyznaczenie długości klucza bez szukania powtórzeń.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph LR
+    subgraph Szyfr Cezara (Proste podstawienie - przesunięcie o 3)
+        TextIn["A"] -->|Przesunięcie| TextOut["D"]
+    end
+    subgraph Szyfr Vigenere'a (Wieloalfabetowy)
+        Key["Klucz powtarzany: K L U C Z K L U"]
+        Plain["Tekst jawny:      T E K S T J A W"]
+        Key & Plain --> Table["Kwadrat Vigenere'a (Lookup)"]
+        Table --> Cipher["Szyfrogram"]
+    end
+```
 
 ## Podsumowanie
 Szyfry podstawieniowe stanowią fundament historii kryptografii. Szyfry jednoalfabetowe oferują zerowe bezpieczeństwo z powodu podatności na analizę częstotliwościową. Szyfry wieloalfabetowe znacząco utrudniły kryptoanalizę poprzez maskowanie statystyk tekstu jawnego. Ich ostatecznym rozwinięciem jest **klucz jednorazowy (One-Time Pad)** – szyfr wieloalfabetowy o długości klucza równej długości wiadomości, który jako jedyny gwarantuje matematycznie udowodnione bezpieczeństwo (tajność doskonałą).
@@ -1692,6 +2168,21 @@ Szyfr z kluczem jednorazowym (OTP, szyfr Vernama) działa na bitach reprezentuj�
    $$C_1 \oplus C_2 = M_1 \oplus M_2$$
    co całkowicie eliminuje losowy klucz i pozwala na łatwe odczytanie obu wiadomości metodami statystycznymi.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    PS["Tajność Doskonała (Perfect Secrecy)"] --> Crit1["1. Prawdopodobieństwo otrzymania danego tekstu jawnego <br/> dla szyfrogramu jest równe prawdopodobieństwu a priori"]
+    PS --> Crit2["2. Szyfrogram nie udostępnia żadnych informacji o tekście jawnym"]
+    PS --> Crit3["3. Warunki Twierdzenia Shannona"]
+
+    Crit3 --> S1["Klucz musi być całkowicie losowy"]
+    Crit3 --> S2["Długość klucza >= Długość tekstu jawnego"]
+    Crit3 --> S3["Klucz używany jednorazowo (One-Time Pad)"]
+```
+
 ## Podsumowanie
 Tajność doskonała to najwyższy możliwy poziom bezpieczeństwa kryptograficznego. Chroni ona dane niezależnie od mocy obliczeniowej przeciwnika (jest odporna nawet na komputery kwantowe). Zgodnie z twierdzeniem Shannona wymaga to jednak klucza o długości równej długości wiadomości, który musi być przesłany bezpiecznym kanałem i użyty tylko raz. Z tego powodu współczesna kryptografia użytkowa (np. HTTPS, AES, RSA) opiera się na **bezpieczeństwie obliczeniowym** – szyfry te można teoretycznie złamać, ale wymagałoby to miliardów lat obliczeń na współczesnych komputerach.
 
@@ -1742,6 +2233,23 @@ Wartość $S'$ odpowiada sumie bitów pomnożonej przez ciąg superrosnący $A$.
 ### 3. Dlaczego szyfry plecakowe nie są dziś stosowane?
 Kryptosystem Merkle-Hellmana **został całkowicie złamany** w 1982 r. przez Adi Shamira. 
 Shamir udowodnił, że klucz publiczny $B$ wcale nie jest w pełni losowy i zachowuje strukturę matematyczną powiązaną z ciągiem superrosnącym. Wykorzystując metodę redukcji baz sieci (krat) – **algorytm LLL** (Lenstra-Lenstra-Lovász) – można w czasie wielomianowym wyliczyć parametry $W$ i $M$ bezpośrednio z klucza publicznego $B$, co pozwala na pełne odszyfrowanie wiadomości. Wszystkie kolejne modyfikacje szyfrów plecakowych również okazały się podatne na ten rodzaj kryptoanalizy.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Nadawca (Szyfrowanie)
+        Plain["Wiadomość binarna (np. 1101)"] -->|Szyfrowanie| Pub["Klucz publiczny: trudny plecak"]
+        Pub -->|Suma wybranych elementów| Cipher["Szyfrogram S"]
+    end
+    subgraph Odbiorca (Deszyfrowanie)
+        Cipher -->|Transformacja modularna (mod n, w^-1)| Easy["Prostszy plecak"]
+        Easy -->|Rozwiązanie algorytmem zachłannym| Priv["Klucz prywatny: plecak superrosnący"]
+        Priv --> Decrypt["Wiadomość zdeszyfrowana: 1101"]
+    end
+```
 
 ## Podsumowanie
 Szyfry plecakowe odegrały ważną rolę w historii kryptografii jako pierwsza próba konstrukcji kryptosystemu asymetrycznego opartego na problemie NP-zupełnym (zamiast faktoryzacji liczb, jak w RSA). Choć sam algorytm okazał się dziurawy ze względu na słabość strukturalną ukrytą w ciągach superrosnących, matematyka leżąca u podstaw ich łamania (kraty/sieci punktów) dała początek **kryptografii opartej na kratach (Lattice-based cryptography)**, która jest dziś głównym kandydatem na standardy kryptografii postkwantowej.
@@ -1817,6 +2325,22 @@ RSA umożliwia również weryfikację autentyczności wiadomości (podpis cyfrow
 - **Zastosowanie paddingu (OAEP)**: "Surowe" szyfrowanie RSA ($C = M^e \pmod{n}$) jest deterministyczne. Atakujący może zgadnąć treść wiadomości, zaszyfrować ją kluczem publicznym i porównać z przechwyconym szyfrogramem. Aby temu zapobiec, stosuje się schemat **OAEP**, który dodaje losowy szum do wiadomości przed szyfrowaniem, czyniąc proces probabilistycznym.
 - **Podatność na komputery kwantowe**: Algorytm RSA jest podatny na **algorytm Shora** realizowany na komputerach kwantowych. W momencie powstania stabilnego komputera kwantowego o odpowiedniej liczbie kubitów, klucze RSA zostaną natychmiast złamane. Stąd trwają prace nad migracją na algorytmy postkwantowe (PQC).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+sequenceDiagram
+    actor Alice as Nadawca (Alice)
+    actor Bob as Odbiorca (Bob)
+
+    Note over Bob: Generowanie Kluczy RSA:<br/>1. Wybierz p, q (duże pierwsze)<br/>2. n = p*q oraz phi(n) = (p-1)*(q-1)<br/>3. Wybierz e względnie pierwsze z phi(n)<br/>4. Oblicz d (d*e = 1 mod phi(n))
+    Bob->>Alice: Udostępnij klucz publiczny (e, n)
+    Note over Alice: Szyfrowanie:<br/>Wiadomość m <br/> Szyfrogram c = m^e mod n
+    Alice->>Bob: Wyślij szyfrogram c
+    Note over Bob: Deszyfrowanie:<br/>c^d mod n = m (Wiadomość oryginalna)
+```
+
 ## Podsumowanie
 Algorytm RSA to fundamentalny protokół współczesnego bezpieczeństwa sieciowego (stanowiący m.in. podstawę certyfikatów SSL/TLS). Oparty na trudności faktoryzacji dużych liczb złożonych, realizuje zarówno szyfrowanie asymetryczne, jak i podpisy cyfrowe. Dla zachowania bezpieczeństwa wymaga kluczy o długości minimum 2048 bitów oraz stosowania schematów dopełniania takich jak OAEP.
 
@@ -1872,6 +2396,18 @@ Projekt OWASP tworzy dedykowaną listę zagrożeń specyficznych dla urządzeń 
   - Stosowanie narzędzi do **obfuskacji (zaciemniania)** kodu (np. *ProGuard*, *R8* w Androidzie) – zmieniają one nazwy klas i funkcji na losowe ciągi znaków, utrudniając analizę.
   - Implementacja mechanizmów anty-dekompilacji i detekcji modyfikacji kodu (Root/Jailbreak detection) – aplikacja powinna odmówić uruchomienia, jeśli wykryje, że działa na zmodyfikowanym urządzeniu lub jej podpis cyfrowy został zmieniony.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    M["Kluczowe Zagrożenia Mobilne (OWASP)"] --> M1["1. Niewłaściwe użycie platformy (np. Keychain/Keystore)"]
+    M --> M2["2. Niepewne przechowywanie danych (np. pliki tekstowe)"]
+    M --> M3["3. Niepewna komunikacja (brak weryfikacji SSL/TLS)"]
+    M --> M4["4. Słaba autoryzacja/uwierzytelnianie (weryfikacja po stronie klienta)"]
+```
+
 
 ---
 
@@ -1926,6 +2462,22 @@ Aplikacje czasami muszą wymieniać informacje (np. aplikacja bankowa otwiera ap
 - W Androidzie odbywa się to za pomocą mechanizmu **Intents** (Intencji) oraz usług systemowych, gdzie nadawca może określić uprawnienia wymagane od odbiorcy.
 - W iOS wymiana danych jest skrajnie ograniczona do tzw. *URL Schemes* (wywołań adresów URL przypisanych do aplikacji) oraz ściśle zdefiniowanych rozszerzeń systemowych (*App Extensions*).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Android Sandbox (Oparty na UID Linuxa)
+        AppA["Aplikacja A <br/> (UID: 10001)"] -.->|Brak dostępu do plików B| DirectoryB[("Katalog Aplikacji B")]
+        AppB["Aplikacja B <br/> (UID: 10002)"] -.->|Brak dostępu do plików A| DirectoryA[("Katalog Aplikacji A")]
+    end
+    subgraph iOS Sandbox (Oparty na kontenerach i piaskownicy Seatbelt)
+        AppC["Aplikacja C"] -->|Wydzielony kontener| ContainerC["Bundle Container / Data Container"]
+        AppD["Aplikacja D"] -->|Wydzielony kontener| ContainerD["Bundle Container / Data Container"]
+    end
+```
+
 ## Podsumowanie
 Izolacja danych w systemach mobilnych opiera się na **piaskownicy (sandboxing)** wymuszanej na poziomie jądra systemu, systemowym **szyfrowaniu plików (FBE / Data Protection)** zintegrowanym ze sprzętem (Secure Enclave / TEE) oraz dedykowanych interfejsach **Keychain/Keystore**, które uniemożliwiają aplikacjom wzajemny podsłuch i kradzież danych sesyjnych.
 
@@ -1975,6 +2527,20 @@ W przeszłości aplikacje skanowały otoczenie w poszukiwaniu nadajników Blueto
 #### D. Wykonywanie połączeń i SMS (GSM)
 - **Ograniczenie uprawnień systemowych**: Uprawnienia do bezpośredniego nawiązywania połączeń (`CALL_PHONE`) i wysyłania SMS (`SEND_SMS`) mogą być nadużywane do generowania kosztów (numery Premium). 
 - **Zabezpieczenie**: Aplikacja może wysłać żądanie nawiązania połączenia lub wysłania SMS, ale system domyślnie przekazuje te dane do **systemowego dialera / aplikacji wiadomości**, gdzie to użytkownik musi ostatecznie fizycznie kliknąć przycisk "Zadzwoń" lub "Wyślij". Bezpośrednie wysłanie bez wiedzy użytkownika jest zablokowane dla zwykłych aplikacji.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+flowchart TD
+    Start["Aplikacja żąda dostępu (np. do kamery)"] --> Check{"Czy uprawnienie jest przyznane w OS?"}
+    Check -->|Tak| Access["Wykonaj operację / Dostęp przyznany"]
+    Check -->|Nie| Show["Pokaż systemowe okno dialogowe zapytania"]
+    Show --> UserDecision{"Decyzja użytkownika"}
+    UserDecision -->|Zezwól| Grant["Zapisz uprawnienie w OS"] --> Access
+    UserDecision -->|Odrzuć| Deny["Zablokuj dostęp i obsłuż brak uprawnienia"]
+```
 
 ## Podsumowanie
 Nowoczesne systemy mobilne zabezpieczają wrażliwe funkcje sprzętowe poprzez ustrukturyzowany model **uprawnień dynamicznych**, rygorystyczne **blokowanie dostępu w tle** oraz systemowe **wskaźniki wizualne** informujące użytkownika o działaniu kamery i mikrofonu. Podejście to oddaje pełną kontrolę nad prywatnością w ręce użytkownika urządzenia.
@@ -2030,6 +2596,21 @@ Ponieważ paczka aplikacji (APK/IPA) jest publicznie dostępna, kod źródłowy 
 ### 4. Bezpieczne uwierzytelnianie i autoryzacja
 - **Uwierzytelnianie biometryczne**: Integracja z systemowym interfejsem biometrii (BiometricPrompt / FaceID). Weryfikacja biometryczna powinna być zintegrowana kryptograficznie – np. poprawny odczyt odcisku palca odblokowuje dostęp do klucza w Keystore/Keychain, którym szyfrowany jest token sesji.
 - **Zarządzanie tokenami**: Stosowanie tokenów dostępowych (np. OAuth 2.0 / JWT) o krótkim czasie ważności, wymuszanie ponownego logowania przy próbie wykonania operacji krytycznych (np. zmiana hasła, przelew).
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Secure["Bezpieczeństwo danych w Mobile"] --> Storage["Bezpieczne przechowywanie"]
+    Secure --> Transport["Bezpieczny transport"]
+    Secure --> Obf["Ochrona aplikacji (Obfuscation)"]
+
+    Storage --> Android["Android Keystore + EncryptedSharedPreferences"]
+    Storage --> iOS["iOS Keychain + Data Protection API"]
+    Transport --> Pinning["SSL Pinning (przypinanie certyfikatu)"]
+```
 
 ## Podsumowanie
 Bezpieczeństwo aplikacji mobilnej zależy od świadomości programisty. Stosując zasadę **obrony w głąb**, należy zabezpieczyć dane lokalne przy użyciu sprzętowo chronionych kluczy (Keystore/Keychain) i szyfrowania (EncryptedSharedPreferences, SQLCipher), wymusić bezpieczną komunikację sieciową (HTTPS, SSL Pinning) oraz zabezpieczyć sam plik binarny przed dekompilacją i uruchomieniem w niezaufanym środowisku (obfuskacja, RASP).
@@ -2088,6 +2669,21 @@ Alianse strategiczne to elastyczniejsze formy partnerstwa oparte na umowach koop
 - **Ryzyko utraty kontroli**: Brak pełnej władzy nad operacjami partnera.
 - **Transfer wiedzy do konkurenta**: Ryzyko, że partner pozyska nasze technologie i know-how, a po zakończeniu aliansu stanie się bezpośrednim rywalem.
 - **Konflikty decyzyjne**: Trudniejsze zarządzanie z powodu konieczności ciągłego wypracowywania kompromisów.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Growth["Strategie Rozwoju Zewnętrznego"] --> Fuzja["Fuzja (Merger) <br/> Połączenie dwóch firm w nowy podmiot"]
+    Growth --> Przejecie["Przejęcie (Acquisition) <br/> Wykupienie jednej firmy przez drugą"]
+    Growth --> Alians["Alians Strategiczny <br/> Współpraca firm bez fuzji kapitałowej"]
+
+    style Fuzja fill:#e3f2fd,stroke:#1565c0,stroke-width:1px
+    style Przejecie fill:#e8f5e9,stroke:#2e7d32,stroke-width:1px
+    style Alians fill:#fff3e0,stroke:#ef6c00,stroke-width:1px
+```
 
 ## Podsumowanie
 Wybór strategii zależy od celów, budżetu i akceptacji ryzyka. Fuzje i przejęcia (M&A) to strategie agresywne, zapewniające pełną kontrolę i wysokie synergie, ale niosące ogromne ryzyko finansowe i integracyjne. Alianse strategiczne to podejście partnerskie, tańsze i bardziej elastyczne, idealne na rynkach o wysokiej niepewności lub specyficznych barierach prawno-kulturowych.
@@ -2149,6 +2745,24 @@ Metoda łącząca analizę otoczenia z analizą wnętrza firmy:
 - **Analiza zewnętrzna**:
   - **O (Opportunities)** – Szanse: nowe rynki zbytu, dotacje rządowe na cyfryzację.
   - **T (Threats)** – Zagrożenia: wzrost kosztów energii, nowe regulacje prawne.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph PESTEL - Makrootoczenie
+        P["Polityczne"] & E["Ekonomiczne"] & S["Społeczne"] & T["Technologiczne"] & E2["Środowiskowe"] & L["Prawne"]
+    end
+    subgraph Pięć Sił Portera - Branża
+        Forces["Konkurencja wewnątrz sektora"]
+        Forces1["Siła dostawców"] --> Forces
+        Forces2["Siła nabywców"] --> Forces
+        Forces3["Groźba nowych wejść"] --> Forces
+        Forces4["Groźba substytutów"] --> Forces
+    end
+```
 
 ## Podsumowanie
 W analizie strategicznej makrootoczenie bada się metodą **PESTEL** w celu określenia globalnych trendów. Sytuację wewnątrz samej branży ocenia się za pomocą **modelu pięciu sił Portera** i **mapy grup strategicznych**. Zwieńczeniem całego procesu jest integracja tych danych w macierzy **SWOT**, która pozwala sformułować konkretne kierunki strategiczne (np. strategię agresywną, konserwatywną czy naprawczą).
@@ -2215,6 +2829,18 @@ Poniższa tabela prezentuje przyporządkowanie mierników (KPI) do określonych 
   *Cel*: Uratowanie firmy przed bankructwem, restrukturyzacja.
   *Kluczowe KPI*: Poziom kosztów stałych (redukcja o X%), rentowność poszczególnych oddziałów (likwidacja nierentownych), przepływy pieniężne (Cash Flow).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    BSC["Zrównoważona Karta Wyników (BSC)"] --> Fin["Perspektywa Finansowa <br/> (Rentowność, ARR, LTV/CAC)"]
+    BSC --> Client["Perspektywa Klienta <br/> (NPS, Churn Rate, Udział w rynku)"]
+    BSC --> Proc["Perspektywa Procesów Wewnętrznych <br/> (Time-to-Market, SLA, Skalowanie)"]
+    BSC --> Dev["Perspektywa Rozwoju i Nauki <br/> (Szkolenia, Retencja pracowników, MAU)"]
+```
+
 ## Podsumowanie
 Wdrożenie strategii wzrostu wymaga ciągłego monitorowania wskaźników finansowych i operacyjnych. Kluczowymi metrykami w branży technologicznej są **ARR** (odzwierciedlający stabilność przychodów), relacja **LTV do CAC** (sprawność ekonomiczna pozyskiwania klientów), **Churn Rate** (utrzymanie bazy) oraz operacyjny **Time-to-Market** (szybkość innowacji). Ich właściwa analityka pozwala korygować działania marketingowe i deweloperskie na bieżąco.
 
@@ -2270,9 +2896,34 @@ Najpopularniejszym standardem opisu modelu biznesu jest szablon Osterwaldera, kt
      - Licencjonowanie (udostępnienie własności intelektualnej).
      - Reklamę.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Jak? (Infrastruktura)
+        KP["Kluczowi Partnerzy"]
+        KD["Kluczowe Działania"]
+        KZ["Kluczowe Zasoby"]
+    end
+    subgraph Co? (Oferta)
+        PW["Propozycja Wartości"]
+    end
+    subgraph Kto? (Klient)
+        RK["Relacje z Klientami"]
+        K["Kanały Dotarcia"]
+        SK["Segmenty Klientów"]
+    end
+    subgraph Za ile? (Finanse)
+        SKo["Struktura Kosztów"]
+        SP["Strumienie Przychodów"]
+    end
+
+    KP & KD & KZ --> PW
+    PW --> RK & K & SK
+    SKo & SP
+```
+
 ## Podsumowanie
 Model biznesu to system naczyń połączonych. Zmiana jednego elementu (np. przejście ze sprzedaży licencji na model subskrypcyjny SaaS w bloku *Strumienie przychodów*) pociąga za sobą zmiany w innych blokach (wymaga innych *Kluczowych zasobów* w postaci serwerów chmurowych oraz innych *Relacji z klientami*). Analiza modelu przy użyciu Business Model Canvas pozwala na wdrożenie spójnego i trwałego mechanizmu rynkowego gwarantującego stabilność ekonomiczną przedsiębiorstwa.
-
-
----
-

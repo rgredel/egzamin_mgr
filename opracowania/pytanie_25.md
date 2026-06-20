@@ -60,5 +60,25 @@ Podejście probabilistyczne, stosowane gdy czasy trwania zadań są trudne do pr
   4. Po podstawieniu średnich czasów ($t_e$) jako stałych czasów trwania zadań, wyznacza się ścieżkę krytyczną dokładnie tak samo, jak w metodzie CPM.
   5. Sumując wariancje zadań na ścieżce krytycznej, można obliczyć odchylenie standardowe projektu i oszacować prawdopodobieństwo ukończenia projektu w określonym terminie (korzystając z rozkładu normalnego).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph LR
+    A["Zadanie A <br/> t = 3 dni"] --> B["Zadanie B <br/> t = 4 dni"]
+    A --> C["Zadanie C <br/> t = 2 dni"]
+    B --> D["Zadanie D <br/> t = 3 dni"]
+    C --> D
+    D --> E["Zadanie E <br/> t = 2 dni"]
+
+    linkStyle 0,2,4 stroke:#d32f2f,stroke-width:3px;
+    style A fill:#ffebee,stroke:#d32f2f
+    style B fill:#ffebee,stroke:#d32f2f
+    style D fill:#ffebee,stroke:#d32f2f
+    style E fill:#ffebee,stroke:#d32f2f
+    Note over A,E: Ścieżka Krytyczna (12 dni): A -> B -> D -> E
+```
+
 ## Podsumowanie
 Struktura podziału pracy (WBS) pozwala na zdekomponowanie skomplikowanego projektu na małe zadania. Następnie, poprzez połączenie ich zależnościami logicznymi, tworzy się sieć powiązań. Wyznaczenie ścieżki krytycznej przy użyciu algorytmów CPM (dla stałych czasów) lub PERT (dla zakresów czasów) pozwala zidentyfikować kluczowe zadania decydujące o terminie końcowym projektu i zminimalizować ryzyko opóźnień.

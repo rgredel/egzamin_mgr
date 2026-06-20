@@ -65,5 +65,20 @@ To najwyższy poziom dojrzałości, który czyni API prawdziwie "RESTful". Zapew
   }
   ```
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    L3["Poziom 3: HATEOAS <br/> (Kontrola hipermediów, dynamiczne linki)"] --> L2["Poziom 2: Czasowniki HTTP <br/> (GET/POST/PUT/DELETE i statusy)"]
+    L2 --> L1["Poziom 1: Zasoby <br/> (Unikalne adresy URI dla każdego zasobu)"]
+    L1 --> L0["Poziom 0: RPC / Bagno POX <br/> (Jeden endpoint, tylko POST, XML/JSON)"]
+    style L3 fill:#81c784,stroke:#388e3c,stroke-width:2px
+    style L2 fill:#fff176,stroke:#fbc02d,stroke-width:2px
+    style L1 fill:#ffb74d,stroke:#f57c00,stroke-width:2px
+    style L0 fill:#e57373,stroke:#d32f2f,stroke-width:2px
+```
+
 ## Podsumowanie
 Większość komercyjnych usług sieciowych określanych jako REST API w rzeczywistości plasuje się na **Poziomie 2** modelu dojrzałości Richardsona. Wdrożenie **Poziomu 3 (HATEOAS)** jest rzadsze, ponieważ wymaga większego nakładu pracy przy tworzeniu i konsumowaniu API, jednak reprezentuje ono pełną, teoretyczną definicję stylu REST, zapewniając elastyczność i ewolucyjność API.

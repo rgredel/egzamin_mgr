@@ -56,3 +56,14 @@ Współczesne ataki łączą te elementy w łańcuch infekcji:
      |
 [ TROJAN ] (Złośliwy kod) -> Użytkownik uruchamia plik, który potajemnie przejmuje komputer (RAT)
 ```
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Spam["Spam <br/> (Masowa, niechciana korespondencja)"] -->|Jeżeli ma złośliwy cel wyłudzenia| Phishing["Phishing <br/> (Wiadomości wyłudzające dane/hasła)"]
+    Phishing -->|Często dostarcza załącznik z| Trojan["Trojan <br/> (Szkodliwe oprogramowanie pod maską legalnego)"]
+    style Phishing fill:#ffebee,stroke:#c62828,stroke-width:2px
+```

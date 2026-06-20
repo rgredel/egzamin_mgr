@@ -46,5 +46,24 @@ Tradycyjna taksonomia dzieli złośliwe oprogramowanie na kategorie według mech
 - **Charakterystyka**: RAT to trojan, który po instalacji otwiera ukryty port i nawiązuje połączenie zwrotne (reverse shell) do serwera C2 atakującego. Daje to cyberprzestępcy pełną kontrolę administracyjną nad zainfekowanym komputerem. Atakujący może modyfikować rejestr, pobierać i uruchamiać inne złośliwe pliki, kraść pliki lokalne czy użyć komputera ofiary jako punktu przesiadkowego (pivot) do dalszego ataku w sieci lokalnej.
 - **Metody obrony**: Filtrowanie ruchu wychodzącego na zaporach sieciowych (Firewall egress filtering), wykrywanie anomalii sieciowych (np. niespodziewane połączenia na nietypowe porty zewnętrzne), zasada minimalnych uprawnień dla użytkowników systemu.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    M["Złośliwe oprogramowanie (Malware)"] --> Prop["Sposób propagacji / uruchamiania"]
+    M --> Pay["Szkodliwe działanie (Payload)"]
+
+    Prop --> Vir["Wirusy <br/> (wymagają nosiciela)"]
+    Prop --> Worm["Robaki <br/> (samodzielne w sieci)"]
+    Prop --> Troj["Trojany <br/> (pod maską legalnej aplikacji)"]
+
+    Pay --> Rans["Ransomware <br/> (szyfrowanie i okup)"]
+    Pay --> Spy["Spyware / Keylogger <br/> (szpiegowanie i kradzież danych)"]
+    Pay --> Root["Rootkity <br/> (ukrywanie obecności w OS)"]
+    Pay --> Bot["Botnet / Boty <br/> (maszyny zombie, ataki DDoS)"]
+```
+
 ## Podsumowanie
 Współczesna taksonomia malware staje się coraz bardziej płynna, ponieważ złośliwe programy są modułowe – jedno zagrożenie może być jednocześnie trojanem (dropperem), pobierać robaka do propagacji w sieci lokalnej, instalować spyware w celu kradzieży danych, a na końcu zaszyfrować dysk jako ransomware. Skuteczna ochrona wymaga kompleksowego podejścia (Defense in Depth) na poziomie sieci, punktów końcowych oraz edukacji użytkowników.

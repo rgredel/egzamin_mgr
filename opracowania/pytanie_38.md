@@ -50,5 +50,20 @@ Alianse strategiczne to elastyczniejsze formy partnerstwa oparte na umowach koop
 - **Transfer wiedzy do konkurenta**: Ryzyko, że partner pozyska nasze technologie i know-how, a po zakończeniu aliansu stanie się bezpośrednim rywalem.
 - **Konflikty decyzyjne**: Trudniejsze zarządzanie z powodu konieczności ciągłego wypracowywania kompromisów.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Growth["Strategie Rozwoju Zewnętrznego"] --> Fuzja["Fuzja (Merger) <br/> Połączenie dwóch firm w nowy podmiot"]
+    Growth --> Przejecie["Przejęcie (Acquisition) <br/> Wykupienie jednej firmy przez drugą"]
+    Growth --> Alians["Alians Strategiczny <br/> Współpraca firm bez fuzji kapitałowej"]
+
+    style Fuzja fill:#e3f2fd,stroke:#1565c0,stroke-width:1px
+    style Przejecie fill:#e8f5e9,stroke:#2e7d32,stroke-width:1px
+    style Alians fill:#fff3e0,stroke:#ef6c00,stroke-width:1px
+```
+
 ## Podsumowanie
 Wybór strategii zależy od celów, budżetu i akceptacji ryzyka. Fuzje i przejęcia (M&A) to strategie agresywne, zapewniające pełną kontrolę i wysokie synergie, ale niosące ogromne ryzyko finansowe i integracyjne. Alianse strategiczne to podejście partnerskie, tańsze i bardziej elastyczne, idealne na rynkach o wysokiej niepewności lub specyficznych barierach prawno-kulturowych.

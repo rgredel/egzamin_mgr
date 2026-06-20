@@ -55,5 +55,19 @@ Wprowadzony przez Google model do przetwarzania wielkich zbiorów danych (Big Da
 - **Faza Reduce**: Agregacja pośrednich wyników przez węzły redukujące na podstawie klucza.
 - **Narzędzia**: Apache Hadoop, Apache Spark.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Pamięć Współdzielona (np. OpenMP)
+        P1["Procesor 1"] & P2["Procesor 2"] & P3["Procesor 3"] --> SharedMem[("Wspólna Pamięć RAM")]
+    end
+    subgraph Przesyłanie Wiadomości (np. MPI)
+        NodeA["Węzeł A: Procesor 1 + RAM A"] <-->|Komunikacja sieciowa (MPI Send/Recv)| NodeB["Węzeł B: Procesor 2 + RAM B"]
+    end
+```
+
 ## Podsumowanie
 Współczesne programowanie równoległe opiera się na dopasowaniu modelu programowania do architektury sprzętowej. Do obliczeń na komputerach wielordzeniowych stosuje się pamięć współdzieloną (OpenMP/wątki), w klastrach rozproszonych standardem jest przekazywanie komunikatów (MPI), w obliczeniach naukowych i sztucznej inteligencji dominuje równoległość danych na kartach GPU (CUDA), natomiast w systemach wysoko-dostępnych i mikrousługach popularność zyskuje model aktorów.

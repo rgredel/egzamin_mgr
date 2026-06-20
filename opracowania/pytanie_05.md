@@ -34,5 +34,26 @@ W polskim systemie prawnym i doktrynalnym wyróżnia się trzy główne kategori
 - **Incydent istotny**: Incydent, który ma istotny wpływ na świadczenie usługi przez dostawcę usług cyfrowych lub operatora usługi kluczowej. Kryteria istotności są ściśle określone (np. liczba dotkniętych użytkowników, czas trwania).
 - **Incydent krytyczny**: Incydent skutkujący znaczną szkodą dla bezpieczeństwa lub obronności państwa, bezpieczeństwa publicznego, życia i zdrowia ludzi lub funkcjonowania instytucji państwowych (rozstrzyga o nim właściwy CSIRT poziomu krajowego).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph CSIRT Poziomu Krajowego
+        ABW["CSIRT GOV <br/> (Agencja Bezpieczeństwa Wewnętrznego)"]
+        NASK["CSIRT NASK <br/> (Naukowa i Akademicka Sieć Komputerowa)"]
+        MON["CSIRT MON <br/> (Wojska Obrony Cyberprzestrzeni)"]
+    end
+    subgraph Sektory i Odbiorcy
+        ABW -->|Administracja rządowa & Infrastruktura krytyczna| IK["Operatorzy Usług Kluczowych (OUK)"]
+        NASK -->|Sektor cywilny, samorządy, obywatele| PC["Podmioty publiczne, DUC, Obywatele"]
+        MON -->|Resort obrony narodowej & Siły Zbrojne| SZ["Wojsko i Jednostki Wojskowe"]
+    end
+    style ABW fill:#ffecb3,stroke:#ffa000,stroke-width:2px
+    style NASK fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style MON fill:#ffebee,stroke:#d32f2f,stroke-width:2px
+```
+
 ## Podsumowanie
 Doktryna Cyberbezpieczeństwa RP określa podejście państwa do obrony w sieci, oparte na współpracy trójfilarowej (wojskowym, rządowym i cywilnym). System ten stawia jasne wymagania bezpieczeństwa przed podmiotami kluczowymi i publicznymi, narzucając im ścisłe ramy czasowe na zgłaszanie incydentów (zazwyczaj do 24 godzin od wykrycia) oraz nakazuje ciągłe monitorowanie zagrożeń w koordynacji z krajowymi zespołami CSIRT.

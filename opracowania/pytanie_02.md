@@ -24,5 +24,17 @@ Praca w TDD odbywa się w mikro-krokach:
 - **Czas i koszty początkowe**: Czas programisty potrzebny na dostarczenie pierwszej wersji kodu jest większy niż w przypadku pominięcia testów (choć w długiej perspektywie TDD skraca czas fazy stabilizacji i debugowania).
 - **Próg wejścia**: Wymaga dyscypliny i doświadczenia w projektowaniu testowalnego kodu. Złe testy (np. zbyt mocno powiązane z wewnętrzną implementacją klasy zamiast z jej kontraktem) utrudniają refaktoryzację.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+stateDiagram-v2
+    [*] --> RED: Napisz test, który nie przechodzi
+    RED --> GREEN: Napisz minimalny kod, aby test przeszedł
+    GREEN --> REFACTOR: Oczyść i zoptymalizuj kod (DRY, czytelność)
+    REFACTOR --> RED: Kolejna iteracja / Następna funkcja
+```
+
 ## Podsumowanie
 TDD to metodyka projektowa, w której testy pełnią rolę wymagań projektowych i specyfikacji. Zapewnia ona tworzenie oprogramowania o wysokiej jakości technicznej, ułatwiając ciągłą integrację i elastyczność w modyfikacji kodu.

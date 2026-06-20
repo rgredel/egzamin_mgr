@@ -73,5 +73,21 @@ Zrównoleglanie obliczeń na kartach graficznych (GPU) pozwala na jednoczesne ur
 | **CUDA** | Rozproszona (CPU/GPU) | Transfery pamięciowe PCIe | Akceleracja GPU (NVIDIA), AI / Deep Learning |
 | **OpenCL** | Heterogeniczna | Transfery pamięciowe | Przenośne obliczenia na kartach różnych marek |
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Env["Środowiska programowania równoległego"] --> SM["Pamięć współdzielona"]
+    Env --> DM["Pamięć rozproszona"]
+    Env --> GPU["Akceleratory graficzne"]
+
+    SM --> OpenMP["OpenMP <br/> (dyrektywy kompilatora, łatwy w użyciu)"]
+    SM --> Pthreads["Pthreads / Wątki <br/> (niskopoziomowe watki systemowe)"]
+    DM --> MPI["MPI <br/> (Message Passing Interface, klastry)"]
+    GPU --> CUDA["CUDA / OpenCL <br/> (tysiące rdzeni karty graficznej)"]
+```
+
 ## Podsumowanie
 Współczesne wyzwania obliczeniowe wymagają od programistów znajomości wielu środowisk. W celu pełnego wykorzystania nowoczesnego superkomputera często stosuje się **programowanie hybrydowe (MPI + OpenMP + CUDA)**, gdzie MPI odpowiada za komunikację między serwerami, OpenMP za wielowątkowość w ramach jednego serwera, a CUDA przyspiesza najcięższe obliczenia matematyczne na kartach GPU.

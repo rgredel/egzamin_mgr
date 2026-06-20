@@ -32,5 +32,20 @@ Aplikacje internetowe stanowią główny cel cyberataków z kilku kluczowych pow
 3. **Złożoność techniczna i łańcuch dostaw (Software Supply Chain)**: Współczesne aplikacje webowe korzystają z tysięcy zewnętrznych pakietów (np. npm, Maven, NuGet). Błąd w jednej małej bibliotece (przykład podatności w bibliotece `Log4j` w Javie) natychmiast czyni podatną całą aplikację.
 4. **Presja biznesowa i brak edukacji**: Często priorytetem w projektach IT jest czas dostarczenia na rynek (*time-to-market*). Programiści skupiają się na funkcjonalnościach biznesowych, a nie na bezpieczeństwie. Dodatkowo, brak systematycznego szkolenia z zakresu bezpiecznego kodowania (*Secure Coding*) sprawia, że w kodzie powielane są te same klasyczne błędy.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Attacker["Atakujący"] -->|1. Manipulacja żądaniami HTTP| Client["Klient / Przeglądarka <br/> (brak kontroli wejścia)"]
+    Client -->|2. Wstrzykiwanie kodu / złośliwe wejście| Server["Serwer Aplikacji Webowej"]
+    Server -->|SQL Injection| DB[("Baza Danych")]
+    Server -->|Command Injection| OS["System Operacyjny Serwera"]
+    Server -->|Błędy bibliotek| Deps["Zależności firm trzecich (npm, Maven itp.)"]
+    style Attacker fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style Deps fill:#fff3e0,stroke:#ef6c00,stroke-width:1px
+```
+
 ## Podsumowanie
 Podatności są stałym elementem cyklu życia oprogramowania. Zapewnienie bezpieczeństwa aplikacji internetowej nie jest jednorazowym zadaniem, ale ciągłym procesem (DevSecOps), który obejmuje automatyczne testy kodu (SAST/DAST), walidację wszystkich danych wejściowych po stronie serwera oraz regularne audyty i testy penetracyjne.

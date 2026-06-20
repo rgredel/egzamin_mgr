@@ -50,5 +50,18 @@ Wykorzystują modele matematyczne i statystykę historyczną.
   $$E = \frac{O + 4M + P}{6}$$
   Pozwala to uwzględnić ryzyko i niepewność w obliczeniach.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Est["Metody Estymacji Kosztów"] --> Analogy["Analogia <br/> (Porównanie z minionymi projektami)"]
+    Est --> Expert["Sąd ekspercki <br/> (Metoda Delficka, konsensus)"]
+    Est --> Parametric["Parametryczne <br/> (Wzory matematyczne np. COCOMO)"]
+    Est --> ThreePoint["Szacowanie trójpunktowe <br/> (optymistyczny, pesymistyczny, realistyczny)"]
+    Est --> BottomUp["Oddolne (Bottom-Up) <br/> (Szacowanie cząstkowych zadań WBS)"]
+```
+
 ## Podsumowanie
 W praktyce zarządzania projektami IT nie należy opierać się wyłącznie na jednej metodzie. W fazie koncepcyjnej (inicjacji) stosuje się estymację analogową lub top-down. Po zebraniu wymagań tworzy się strukturę WBS i przeprowadza dokładną estymację oddolną (Bottom-Up) przy użyciu metody PERT, co pozwala na precyzyjne określenie budżetu i harmonogramu projektu.

@@ -49,5 +49,19 @@ Dla każdego wygenerowanego przez narzędzie zagrożenia, zespół projektowy mu
 
 Narzędzie umożliwia wygenerowanie kompletnego raportu (w formacie HTML), który służy jako dokumentacja bezpieczeństwa dla audytorów oraz wytyczne dla programistów wdrażających system.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    S["Spoofing (Podszywanie się)"] -->|Narusza| Auth["Uwierzytelnianie"]
+    T["Tampering (Manipulacja)"] -->|Narusza| Int["Integralność"]
+    R["Repudiation (Zaprzeczalność)"] -->|Narusza| NonRep["Niezaprzeczalność"]
+    I["Info Disclosure (Ujawnienie info)"] -->|Narusza| Conf["Poufność"]
+    D["Denial of Service (Odmowa usługi)"] -->|Narusza| Avail["Dostępność"]
+    E["Elevation of Privilege (Podniesienie upr.)"] -->|Narusza| Author["Autoryzacja / Uprawnienia"]
+```
+
 ## Podsumowanie
 Microsoft Threat Modeling Tool to potężne, ustrukturyzowane narzędzie, które przekłada architekturę logiczną systemu na konkretne zagrożenia bezpieczeństwa przy użyciu metodologii STRIDE. Pomaga ono deweloperom i architektom myśleć jak atakujący, co pozwala na eliminację luk bezpieczeństwa na najwcześniejszym etapie SDLC.

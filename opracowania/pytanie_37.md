@@ -47,5 +47,20 @@ Ponieważ paczka aplikacji (APK/IPA) jest publicznie dostępna, kod źródłowy 
 - **Uwierzytelnianie biometryczne**: Integracja z systemowym interfejsem biometrii (BiometricPrompt / FaceID). Weryfikacja biometryczna powinna być zintegrowana kryptograficznie – np. poprawny odczyt odcisku palca odblokowuje dostęp do klucza w Keystore/Keychain, którym szyfrowany jest token sesji.
 - **Zarządzanie tokenami**: Stosowanie tokenów dostępowych (np. OAuth 2.0 / JWT) o krótkim czasie ważności, wymuszanie ponownego logowania przy próbie wykonania operacji krytycznych (np. zmiana hasła, przelew).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Secure["Bezpieczeństwo danych w Mobile"] --> Storage["Bezpieczne przechowywanie"]
+    Secure --> Transport["Bezpieczny transport"]
+    Secure --> Obf["Ochrona aplikacji (Obfuscation)"]
+
+    Storage --> Android["Android Keystore + EncryptedSharedPreferences"]
+    Storage --> iOS["iOS Keychain + Data Protection API"]
+    Transport --> Pinning["SSL Pinning (przypinanie certyfikatu)"]
+```
+
 ## Podsumowanie
 Bezpieczeństwo aplikacji mobilnej zależy od świadomości programisty. Stosując zasadę **obrony w głąb**, należy zabezpieczyć dane lokalne przy użyciu sprzętowo chronionych kluczy (Keystore/Keychain) i szyfrowania (EncryptedSharedPreferences, SQLCipher), wymusić bezpieczną komunikację sieciową (HTTPS, SSL Pinning) oraz zabezpieczyć sam plik binarny przed dekompilacją i uruchomieniem w niezaufanym środowisku (obfuskacja, RASP).

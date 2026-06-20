@@ -43,5 +43,22 @@ Wartość $S'$ odpowiada sumie bitów pomnożonej przez ciąg superrosnący $A$.
 Kryptosystem Merkle-Hellmana **został całkowicie złamany** w 1982 r. przez Adi Shamira. 
 Shamir udowodnił, że klucz publiczny $B$ wcale nie jest w pełni losowy i zachowuje strukturę matematyczną powiązaną z ciągiem superrosnącym. Wykorzystując metodę redukcji baz sieci (krat) – **algorytm LLL** (Lenstra-Lenstra-Lovász) – można w czasie wielomianowym wyliczyć parametry $W$ i $M$ bezpośrednio z klucza publicznego $B$, co pozwala na pełne odszyfrowanie wiadomości. Wszystkie kolejne modyfikacje szyfrów plecakowych również okazały się podatne na ten rodzaj kryptoanalizy.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Nadawca (Szyfrowanie)
+        Plain["Wiadomość binarna (np. 1101)"] -->|Szyfrowanie| Pub["Klucz publiczny: trudny plecak"]
+        Pub -->|Suma wybranych elementów| Cipher["Szyfrogram S"]
+    end
+    subgraph Odbiorca (Deszyfrowanie)
+        Cipher -->|Transformacja modularna (mod n, w^-1)| Easy["Prostszy plecak"]
+        Easy -->|Rozwiązanie algorytmem zachłannym| Priv["Klucz prywatny: plecak superrosnący"]
+        Priv --> Decrypt["Wiadomość zdeszyfrowana: 1101"]
+    end
+```
+
 ## Podsumowanie
 Szyfry plecakowe odegrały ważną rolę w historii kryptografii jako pierwsza próba konstrukcji kryptosystemu asymetrycznego opartego na problemie NP-zupełnym (zamiast faktoryzacji liczb, jak w RSA). Choć sam algorytm okazał się dziurawy ze względu na słabość strukturalną ukrytą w ciągach superrosnących, matematyka leżąca u podstaw ich łamania (kraty/sieci punktów) dała początek **kryptografii opartej na kratach (Lattice-based cryptography)**, która jest dziś głównym kandydatem na standardy kryptografii postkwantowej.

@@ -49,5 +49,23 @@ Właściwie zaprojektowane metryki bezpieczeństwa powinny być:
 - **Łatwe do pozyskania**: Proces zbierania danych powinien być w miarę możliwości zautomatyzowany, aby nie obciążać administratorów pracą manualną.
 - **Zrozumiałe dla biznesu**: Powinny pozwalać na przełożenie ryzyka technicznego na ryzyko biznesowe i finansowe (np. czas przestoju systemu przeliczony na straty finansowe).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    CIA["Filar Bezpieczeństwa (CIA Triad)"] --> C["Poufność (Confidentiality)"]
+    CIA --> I["Integralność (Integrity)"]
+    CIA --> A["Dostępność (Availability)"]
+
+    subgraph Miary operacyjne
+        MTBF["MTBF <br/> (Średni czas między awariami)"]
+        MTTR["MTTR <br/> (Średni czas naprawy)"]
+        RTO["RTO <br/> (Maksymalny dopuszczalny czas przestoju)"]
+        RPO["RPO <br/> (Maksymalna dopuszczalna utrata danych)"]
+    end
+```
+
 ## Podsumowanie
 Miary bezpieczeństwa systemu komputerowego to niezbędne narzędzie zarządcze. Pozwalają one na przejście od reaktywnego gaszenia pożarów do proaktywnego zarządzania ryzykiem. Skuteczna obrona opiera się na ciągłym monitorowaniu kluczowych wskaźników, takich jak czas wykrycia (MTTD), czas reakcji (MTTR) oraz stopień załatania podatności (Patch Latency).

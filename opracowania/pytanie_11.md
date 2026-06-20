@@ -57,3 +57,27 @@ Obrona przed XSS polega na uniemożliwieniu przeglądarce interpretowania danych
 
 4. **Wdrożenie Content Security Policy (CSP)**:
    Nagłówek HTTP, który instruuje przeglądarkę, skąd może pobierać i uruchamiać skrypty. Przykładowo, polityka `Content-Security-Policy: default-src 'self';` zablokuje uruchamianie jakichkolwiek skryptów wplecionych bezpośrednio w kod HTML (tzw. inline scripts) oraz skryptów z zewnętrznych, niezaufanych domen.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    rect rgb(240, 240, 240)
+        Note over Attacker, Victim: Typ A: Reflected XSS (Odbity)
+        Attacker->>Victim: Wyślij spreparowany link ze skryptem
+        Victim->>Server: Kliknięcie i wysłanie zapytania z parametrem
+        Server-->>Victim: Odesłanie odpowiedzi zawierającej złośliwy skrypt
+        Note over Victim: Przeglądarka ofiary wykonuje skrypt
+    end
+    rect rgb(255, 245, 245)
+        Note over Attacker, Server: Typ B: Stored XSS (Trwały)
+        Attacker->>Server: Zapisz złośliwy skrypt w bazie (np. w komentarzu)
+        Victim->>Server: Wyświetlenie strony z zanieczyszczonym wpisem
+        Server-->>Victim: Odesłanie strony ze skryptem z bazy danych
+        Note over Victim: Przeglądarka ofiary wykonuje skrypt
+    end
+    Victim->>Attacker: Kradzież ciasteczek sesyjnych / danych
+```

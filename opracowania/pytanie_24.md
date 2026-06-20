@@ -53,5 +53,19 @@ Metody stosowane głównie w projektach prowadzonych w metodyce Scrum:
 - **Burn-down Chart (Wykres Spalania)**: Wykres pokazujący ilość pracy pozostałej do wykonania w Sprincie w stosunku do czasu. Pionowa oś reprezentuje pozostały zakres (np. w Story Pointach), a pozioma oś – kolejne dni Sprintu. Linia wykresu powinna schodzić do zera. Odchylenie w górę od linii idealnej oznacza opóźnienie prac.
 - **Burn-up Chart**: Wykres pokazujący ilość ukończonej pracy w czasie na tle całkowitego zakresu projektu. Pomaga w wizualizacji przyrostu zakresu (*scope creep*) – jeśli całkowita linia zakresu rośnie w górę, oznacza to dodawanie nowych wymagań przez klienta w trakcie projektu.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Fazy["Fazy realizacji projektu"] --> Wyt["Wytwórczy <br/> (Analiza -> Projekt -> Implementacja -> Testy -> Wdrożenie)"]
+    Fazy --> Wdr["Wdrożeniowy <br/> (Przygotowanie -> Migracja -> Konfiguracja -> Akceptacja -> Go-Live)"]
+
+    Sledzenie["Metody Śledzenia Postępu"] --> Gantt["Wykres Gantta <br/> (harmonogram i zależności)"]
+    Sledzenie --> Burndown["Wykres Burndown <br/> (spalanie zadań w sprincie)"]
+    Sledzenie --> EVM["EVM (Earned Value Management) <br/> (analiza odchyleń kosztu i czasu)"]
+```
+
 ## Podsumowanie
 Wdrożenie i wytworzenie oprogramowania różnią się zakresem i wyzwaniami – wytworzenie skupia się na programowaniu, natomiast wdrożenie na analizie procesów biznesowych i migracji danych. Do śledzenia postępu w projektach tradycyjnych (Waterfall) stosuje się Wykresy Gantta oraz wskaźniki EVM (SPI, CPI), natomiast w projektach zwinnych (Agile) podstawą są tablice zadań i wykresy spalania (Burn-down).

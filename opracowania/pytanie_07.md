@@ -43,3 +43,24 @@ Obrona przed atakami o dużym nasileniu jest trudna i wymaga zaawansowanych syst
 - **SYN Cookies**: Technika obrony przed SYN Flood, w której serwer nie rezerwuje pamięci na połączenie półotwarte, lecz generuje unikalny numer sekwencyjny (cookie) w pakiecie `SYN-ACK`. Dopiero po otrzymaniu poprawnego pakietu `ACK` od klienta alokowane są zasoby.
 - **Centra czyszczące (Scrubbing Centers)**: Rozwiązania dostawców chmurowych (np. Cloudflare, AWS Shield), gdzie cały ruch sieciowy przechodzi przez serwery filtrujące, które odrzucają pakiety DoS na podstawie sygnatur oraz analizy behawioralnej, wpuszczając do serwera docelowego jedynie czysty ruch.
 - **Rate Limiting i WAF (Web Application Firewall)**: Ograniczanie liczby połączeń z jednego adresu IP oraz analiza reguł aplikacji (np. blokowanie ruchu wykazującego cechy narzędzi typu Slowloris).
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Kategoria ataku
+        V["1. Wolumetryczne <br/> (np. UDP Flood, DNS/NTP Amplification)"]
+        P["2. Na protokoły <br/> (np. SYN Flood, Ping of Death)"]
+        A["3. Na warstwę aplikacji <br/> (np. Slowloris, HTTP Flood)"]
+    end
+    subgraph Struktura ataku DDoS
+        Attacker["Atakujący"] -->|Sterowanie| C2["Serwer C2 (Command & Control)"]
+        C2 -->|Instrukcje| B1["Zombie Bot 1"]
+        C2 -->|Instrukcje| B2["Zombie Bot 2"]
+        B1 & B2 -->|Zmasowany sztuczny ruch| Victim["Ofiara (Serwer docelowy)"]
+    end
+    style Attacker fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style Victim fill:#eceff1,stroke:#37474f,stroke-width:2px
+```

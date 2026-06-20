@@ -53,5 +53,23 @@ Metoda łącząca analizę otoczenia z analizą wnętrza firmy:
   - **O (Opportunities)** – Szanse: nowe rynki zbytu, dotacje rządowe na cyfryzację.
   - **T (Threats)** – Zagrożenia: wzrost kosztów energii, nowe regulacje prawne.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph PESTEL - Makrootoczenie
+        P["Polityczne"] & E["Ekonomiczne"] & S["Społeczne"] & T["Technologiczne"] & E2["Środowiskowe"] & L["Prawne"]
+    end
+    subgraph Pięć Sił Portera - Branża
+        Forces["Konkurencja wewnątrz sektora"]
+        Forces1["Siła dostawców"] --> Forces
+        Forces2["Siła nabywców"] --> Forces
+        Forces3["Groźba nowych wejść"] --> Forces
+        Forces4["Groźba substytutów"] --> Forces
+    end
+```
+
 ## Podsumowanie
 W analizie strategicznej makrootoczenie bada się metodą **PESTEL** w celu określenia globalnych trendów. Sytuację wewnątrz samej branży ocenia się za pomocą **modelu pięciu sił Portera** i **mapy grup strategicznych**. Zwieńczeniem całego procesu jest integracja tych danych w macierzy **SWOT**, która pozwala sformułować konkretne kierunki strategiczne (np. strategię agresywną, konserwatywną czy naprawczą).

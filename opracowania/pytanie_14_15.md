@@ -51,3 +51,19 @@ Ponieważ nie da się zainstalować antywirusa w ludzkim mózgu, obrona musi ł�
    - **DKIM (DomainKeys Identified Mail)**: Podpisuje maile kryptograficznie.
    - **DMARC (Domain-based Message Authentication, Reporting and Conformance)**: Określa, co serwer odbiorcy ma zrobić z mailem, który nie przeszedł testów SPF/DKIM.
 4. **Zasada Zero Trust (Brak zaufania)**: Każda nietypowa prośba (np. zmiana numeru konta do faktury, prośba o podanie hasła) musi być zweryfikowana innym kanałem komunikacji (np. osobista rozmowa lub oddzwonienie na oficjalny numer).
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    Recon["1. Rozpoznanie (OSINT) <br/> Zebranie danych o celu (np. social media)"] --> Hook["2. Nawiązanie kontaktu <br/> Telefon/E-mail z wiarygodną historią (pretekst)"]
+    Hook --> Play["3. Eksploatacja (Atak) <br/> Nakłonienie do wykonania akcji (np. przelew, makro)"]
+    Play --> Exit["4. Wyjście (Zatarcie śladów) <br/> Zakończenie interakcji przed wzbudzeniem podejrzeń"]
+
+    style Recon fill:#e3f2fd,stroke:#1565c0,stroke-width:1px
+    style Hook fill:#e3f2fd,stroke:#1565c0,stroke-width:1px
+    style Play fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style Exit fill:#e3f2fd,stroke:#1565c0,stroke-width:1px
+```

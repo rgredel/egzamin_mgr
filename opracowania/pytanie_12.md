@@ -70,3 +70,23 @@ Obrona przed SQLi jest relatywnie prosta, o ile zasady są konsekwentnie stosowa
 
 4. **Walidacja danych wejściowych**:
    Wprowadzenie białej listy dopuszczalnych znaków oraz weryfikacja typów danych (np. upewnienie się, że parametr `id` zawiera wyłącznie cyfry przed wykonaniem zapytania).
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Podatna Aplikacja (Konkatenacja)
+        InputA["Input: admin' OR '1'='1"] --> QueryA["SQL: SELECT * FROM users WHERE user = 'admin' OR '1'='1'"]
+        QueryA --> DBA[("Baza Danych")]
+        DBA --> ResultA["Zwraca wszystkie rekordy (logowanie bez hasła)"]
+    end
+    subgraph Bezpieczna Aplikacja (Prepared Statements)
+        InputB["Input: admin' OR '1'='1"] --> QueryB["SQL: SELECT * FROM users WHERE user = ?"]
+        QueryB --> DBB[("Baza Danych")]
+        DBB --> ResultB["Szuka użytkownika o dokładnym loginie - bezpieczne"]
+    end
+    style QueryA fill:#ffebee,stroke:#c62828,stroke-width:1px
+    style QueryB fill:#e8f5e9,stroke:#2e7d32,stroke-width:1px
+```

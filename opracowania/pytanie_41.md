@@ -47,5 +47,34 @@ Najpopularniejszym standardem opisu modelu biznesu jest szablon Osterwaldera, kt
      - Licencjonowanie (udostępnienie własności intelektualnej).
      - Reklamę.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Jak? (Infrastruktura)
+        KP["Kluczowi Partnerzy"]
+        KD["Kluczowe Działania"]
+        KZ["Kluczowe Zasoby"]
+    end
+    subgraph Co? (Oferta)
+        PW["Propozycja Wartości"]
+    end
+    subgraph Kto? (Klient)
+        RK["Relacje z Klientami"]
+        K["Kanały Dotarcia"]
+        SK["Segmenty Klientów"]
+    end
+    subgraph Za ile? (Finanse)
+        SKo["Struktura Kosztów"]
+        SP["Strumienie Przychodów"]
+    end
+
+    KP & KD & KZ --> PW
+    PW --> RK & K & SK
+    SKo & SP
+```
+
 ## Podsumowanie
 Model biznesu to system naczyń połączonych. Zmiana jednego elementu (np. przejście ze sprzedaży licencji na model subskrypcyjny SaaS w bloku *Strumienie przychodów*) pociąga za sobą zmiany w innych blokach (wymaga innych *Kluczowych zasobów* w postaci serwerów chmurowych oraz innych *Relacji z klientami*). Analiza modelu przy użyciu Business Model Canvas pozwala na wdrożenie spójnego i trwałego mechanizmu rynkowego gwarantującego stabilność ekonomiczną przedsiębiorstwa.

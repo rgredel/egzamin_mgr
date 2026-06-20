@@ -46,3 +46,15 @@ Projekt OWASP tworzy dedykowaną listę zagrożeń specyficznych dla urządzeń 
 - **Metody obrony**:
   - Stosowanie narzędzi do **obfuskacji (zaciemniania)** kodu (np. *ProGuard*, *R8* w Androidzie) – zmieniają one nazwy klas i funkcji na losowe ciągi znaków, utrudniając analizę.
   - Implementacja mechanizmów anty-dekompilacji i detekcji modyfikacji kodu (Root/Jailbreak detection) – aplikacja powinna odmówić uruchomienia, jeśli wykryje, że działa na zmodyfikowanym urządzeniu lub jej podpis cyfrowy został zmieniony.
+
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    M["Kluczowe Zagrożenia Mobilne (OWASP)"] --> M1["1. Niewłaściwe użycie platformy (np. Keychain/Keystore)"]
+    M --> M2["2. Niepewne przechowywanie danych (np. pliki tekstowe)"]
+    M --> M3["3. Niepewna komunikacja (brak weryfikacji SSL/TLS)"]
+    M --> M4["4. Słaba autoryzacja/uwierzytelnianie (weryfikacja po stronie klienta)"]
+```

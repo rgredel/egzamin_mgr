@@ -52,5 +52,20 @@ Szyfr z kluczem jednorazowym (OTP, szyfr Vernama) działa na bitach reprezentuj�
    $$C_1 \oplus C_2 = M_1 \oplus M_2$$
    co całkowicie eliminuje losowy klucz i pozwala na łatwe odczytanie obu wiadomości metodami statystycznymi.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    PS["Tajność Doskonała (Perfect Secrecy)"] --> Crit1["1. Prawdopodobieństwo otrzymania danego tekstu jawnego <br/> dla szyfrogramu jest równe prawdopodobieństwu a priori"]
+    PS --> Crit2["2. Szyfrogram nie udostępnia żadnych informacji o tekście jawnym"]
+    PS --> Crit3["3. Warunki Twierdzenia Shannona"]
+
+    Crit3 --> S1["Klucz musi być całkowicie losowy"]
+    Crit3 --> S2["Długość klucza >= Długość tekstu jawnego"]
+    Crit3 --> S3["Klucz używany jednorazowo (One-Time Pad)"]
+```
+
 ## Podsumowanie
 Tajność doskonała to najwyższy możliwy poziom bezpieczeństwa kryptograficznego. Chroni ona dane niezależnie od mocy obliczeniowej przeciwnika (jest odporna nawet na komputery kwantowe). Zgodnie z twierdzeniem Shannona wymaga to jednak klucza o długości równej długości wiadomości, który musi być przesłany bezpiecznym kanałem i użyty tylko raz. Z tego powodu współczesna kryptografia użytkowa (np. HTTPS, AES, RSA) opiera się na **bezpieczeństwie obliczeniowym** – szyfry te można teoretycznie złamać, ale wymagałoby to miliardów lat obliczeń na współczesnych komputerach.

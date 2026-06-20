@@ -47,5 +47,21 @@ Systemy rozproszone charakteryzują się brakiem wspólnej pamięci fizycznej (k
 - **Synchronizacja i porządkowanie zdarzeń**:
   Z powodu braku globalnego zegara fizycznego określenie, która operacja zapisu w bazie danych wydarzyła się pierwsza, wymaga stosowania skomplikowanych algorytmów synchronizacji (np. algorytm Paxos, Raft lub zegary wektorowe).
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+graph TD
+    subgraph Monolit / System Centralny
+        Client1["Klient 1"] & Client2["Klient 2"] --> Server["Pojedynczy Serwer Bazy <br/> (SPOF - Single Point of Failure)"]
+    end
+    subgraph System Rozproszony
+        C1["Klient 1"] & C2["Klient 2"] --> LoadBalancer["Load Balancer"]
+        LoadBalancer --> Node1["Węzeł 1"] & Node2["Węzeł 2"] & Node3["Węzeł 3"]
+        Node1 <--> Node2 <--> Node3
+    end
+```
+
 ## Podsumowanie
 Systemy rozproszone to fundament nowoczesnego IT, na którym opierają się największe platformy na świecie (Netflix, Google, Facebook). Zapewniają one niezrównaną skalowalność i odporność na awarie, jednak ceną za te korzyści jest drastyczny wzrost złożoności kodu, konieczność radzenia sobie z problemem spójności danych oraz trudniejsze administrowanie infrastrukturą.

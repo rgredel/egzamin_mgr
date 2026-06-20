@@ -43,5 +43,27 @@ Wzorzec składa się z czterech głównych elementów:
   - Wprowadzenie dodatkowej, często nadmiarowej warstwy (boilerplate code) w mniejszych aplikacjach monolitycznych.
   - Potencjalne maskowanie problemów sieciowych, co może utrudnić debugowanie w skomplikowanych środowiskach.
 
+## Wizualizacja
+
+Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
+
+```mermaid
+sequenceDiagram
+    actor Client as Klient (Prezentacja)
+    participant BD as Business Delegate
+    participant SL as Service Locator
+    participant BS as Business Service (Logika)
+
+    Client->>BD: wykonajUsługe()
+    rect rgb(240, 248, 255)
+        Note over BD, SL: Ukrycie szczegółów lokalizacji i sieci
+        BD->>SL: pobierzUsługę()
+        SL-->>BD: referencja do Usługi
+    end
+    BD->>BS: wywołajMetodęBiznesową()
+    BS-->>BD: wynik operacji
+    BD-->>Client: wynik (lub przetłumaczony błąd)
+```
+
 ## Podsumowanie
 Wzorzec Business Delegate jest kluczowym narzędziem do redukcji sprzężenia w aplikacjach o architekturze wielowarstwowej. Działa jako tarcza ochronna dla warstwy prezentacji, przejmując na siebie całą złożoność integracji sieciowej i wyszukiwania usług, co zwiększa czytelność i łatwość konserwacji kodu klienta.
