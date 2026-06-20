@@ -77,12 +77,12 @@ Oto schemat blokowy / diagram ułatwiający zrozumienie zagadnienia:
 
 ```mermaid
 graph TD
-    subgraph Podatna Aplikacja (Konkatenacja)
+    subgraph "Podatna Aplikacja (Konkatenacja)"
         InputA["Input: admin' OR '1'='1"] --> QueryA["SQL: SELECT * FROM users WHERE user = 'admin' OR '1'='1'"]
         QueryA --> DBA[("Baza Danych")]
         DBA --> ResultA["Zwraca wszystkie rekordy (logowanie bez hasła)"]
     end
-    subgraph Bezpieczna Aplikacja (Prepared Statements)
+    subgraph "Bezpieczna Aplikacja (Prepared Statements)"
         InputB["Input: admin' OR '1'='1"] --> QueryB["SQL: SELECT * FROM users WHERE user = ?"]
         QueryB --> DBB[("Baza Danych")]
         DBB --> ResultB["Szuka użytkownika o dokładnym loginie - bezpieczne"]
